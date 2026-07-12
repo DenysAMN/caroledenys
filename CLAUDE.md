@@ -69,13 +69,21 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** 0 (nenhuma ainda)
+**Sessão concluída:** S0 — ambiente montado e "hello world" no ar.
 
-**Próximo passo:** Sessão 0 — montar ambiente (Node, Git, GitHub, Supabase, Vercel)
-e colocar um Next.js "hello world" no ar. Nada de feature ainda.
+**Infra (links importantes):**
+- Repositório: https://github.com/DenysAMN/caroledenys (privado)
+- Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
+- Chave PIX (do dono): `denysaugusto2015@gmail.com` — entra como variável de ambiente no servidor na S4, NUNCA no código versionado.
+- Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
+
+**Próximo passo:** Sessão 1 — Supabase. Criar conta + projeto no Supabase, escrever a
+migração com o schema completo (seção 2 da ESPECIFICACAO.md) + RLS + as 3 funções SQL
+(`reserve_shares`, `reserve_link`, `expire_stale_claims`) + seed de ~8 presentes fake.
+"Pronto" quando: rodar `reserve_shares` no SQL Editor e ver o contador de cotas subir.
 
 **Feito:**
-- [ ] S0 — Ambiente + deploy vazio
+- [x] S0 — Ambiente + deploy vazio
 - [ ] S1 — Schema + RLS + funções SQL + seed
 - [ ] S2 — Home, lista, detalhe (leitura)
 - [ ] S3 — Fluxo LINK
