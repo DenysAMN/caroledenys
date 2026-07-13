@@ -69,22 +69,26 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S0 — ambiente montado e "hello world" no ar.
+**Sessão concluída:** S1 — banco no ar (schema + RLS + funções + seed), testado no SQL Editor.
 
 **Infra (links importantes):**
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
 - Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
+- Supabase: projeto `caroledenys`, região South America (São Paulo). Migração versionada em `supabase/migrations/`.
 - Chave PIX (do dono): `denysaugusto2015@gmail.com` — entra como variável de ambiente no servidor na S4, NUNCA no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 1 — Supabase. Criar conta + projeto no Supabase, escrever a
-migração com o schema completo (seção 2 da ESPECIFICACAO.md) + RLS + as 3 funções SQL
-(`reserve_shares`, `reserve_link`, `expire_stale_claims`) + seed de ~8 presentes fake.
-"Pronto" quando: rodar `reserve_shares` no SQL Editor e ver o contador de cotas subir.
+**Próximo passo:** Sessão 2 — Home + lista + detalhe (só LEITURA).
+PRIMEIRA COISA: criar `.env.local` (gitignored) com as chaves do Supabase
+(Project URL + anon key + service_role key — pegar em Settings > API do projeto).
+Depois: página Home, `/presentes` (lista lendo `gifts` do banco) e `/presentes/[id]`
+(detalhe). Sem reservar nada ainda — só mostrar. Aqui retomamos o brainstorming de
+VISUAL ("cara de casar.com") antes de construir as telas.
+"Pronto" quando: a lista real de 8 presentes aparece no celular pelo `.vercel.app`.
 
 **Feito:**
 - [x] S0 — Ambiente + deploy vazio
-- [ ] S1 — Schema + RLS + funções SQL + seed
+- [x] S1 — Schema + RLS + funções SQL + seed
 - [ ] S2 — Home, lista, detalhe (leitura)
 - [ ] S3 — Fluxo LINK
 - [ ] S4 — COTAS + LIVRE + PIX
