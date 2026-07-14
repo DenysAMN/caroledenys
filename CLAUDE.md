@@ -69,27 +69,31 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S1 — banco no ar (schema + RLS + funções + seed), testado no SQL Editor.
+**Sessão concluída:** S2 — Home + lista + detalhe (leitura), Direção A, lendo o banco.
+
+**Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
++ `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
+`#FBF7F0` + fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
+Casa do Lago, Rio das Ostras/RJ, ao ar livre à beira do lago.
 
 **Infra (links importantes):**
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
 - Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
-- Supabase: projeto `caroledenys`, região South America (São Paulo). Migração versionada em `supabase/migrations/`.
+- Supabase: projeto `caroledenys`, ref `fmkgkpsxzmgnhnsnspdp`, região São Paulo. Migração em `supabase/migrations/`.
+- **Env vars:** local em `.env.local` (gitignored) → `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key `sb_publishable_...`). AS MESMAS DUAS precisam estar na Vercel (Settings > Environment Variables) senão o site publicado não lê os presentes.
 - Chave PIX (do dono): `denysaugusto2015@gmail.com` — entra como variável de ambiente no servidor na S4, NUNCA no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 2 — Home + lista + detalhe (só LEITURA).
-PRIMEIRA COISA: criar `.env.local` (gitignored) com as chaves do Supabase
-(Project URL + anon key + service_role key — pegar em Settings > API do projeto).
-Depois: página Home, `/presentes` (lista lendo `gifts` do banco) e `/presentes/[id]`
-(detalhe). Sem reservar nada ainda — só mostrar. Aqui retomamos o brainstorming de
-VISUAL ("cara de casar.com") antes de construir as telas.
-"Pronto" quando: a lista real de 8 presentes aparece no celular pelo `.vercel.app`.
+**Próximo passo:** Sessão 3 — Fluxo LINK completo. Modal Nome+WhatsApp+recadinho,
+Server Action chamando `reserve_link` (service_role, NUNCA anon), guest_token no
+localStorage, tela de sucesso, tratar erro `JA_RESERVADO`. Aqui entra a `service_role key`
+no servidor (nova env var, só server, sem `NEXT_PUBLIC_`).
+"Pronto" quando: reservar de dois celulares e um receber `JA_RESERVADO`.
 
 **Feito:**
 - [x] S0 — Ambiente + deploy vazio
 - [x] S1 — Schema + RLS + funções SQL + seed
-- [ ] S2 — Home, lista, detalhe (leitura)
+- [x] S2 — Home, lista, detalhe (leitura)
 - [ ] S3 — Fluxo LINK
 - [ ] S4 — COTAS + LIVRE + PIX
 - [ ] S5 — Admin + fila de confirmação
