@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { reservarLink, type ReserveResult } from "@/app/actions/reservar-link";
-import { saveGuestToken } from "@/lib/guest-storage";
+import { getGuestToken, saveGuestToken } from "@/lib/guest-storage";
 
 type Props = {
   giftId: string;
@@ -26,13 +26,23 @@ export default function ReserveLinkModal({
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
 
+  function close() {
+    if (!pending) onClose();
+  }
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
     setErro(null);
     startTransition(async () => {
-      const res: ReserveResult = await reservarLink({ giftId, nome, whatsapp, recado });
+      const res: ReserveResult = await reservarLink({
+        giftId,
+        nome,
+        whatsapp,
+        recado,
+        guestToken: getGuestToken(),
+      });
       if (res.ok) {
-        saveGuestToken(res.token);
+        if (res.token) saveGuestToken(res.token);
         setDone(true);
         onSuccess();
       } else if (res.error === "JA_RESERVADO") {
@@ -46,9 +56,15 @@ export default function ReserveLinkModal({
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={close}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-x" onClick={onClose} aria-label="Fechar">
+        <button
+          type="button"
+          className="modal-x"
+          onClick={close}
+          disabled={pending}
+          aria-label="Fechar"
+        >
           ×
         </button>
 

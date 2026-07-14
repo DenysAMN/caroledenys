@@ -1,3 +1,4 @@
+import "server-only";
 import { createClient } from "@supabase/supabase-js";
 
 // Cliente ADMIN (service_role) — SÓ SERVIDOR. Ignora o RLS, então só pode ser

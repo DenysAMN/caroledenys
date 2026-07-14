@@ -25,9 +25,12 @@ export default function Countdown() {
   const [p, setP] = useState<Parts | null>(null);
 
   useEffect(() => {
-    setP(diff());
+    const first = window.setTimeout(() => setP(diff()), 0);
     const id = setInterval(() => setP(diff()), 1000);
-    return () => clearInterval(id);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
   }, []);
 
   const cells: [number | string, string][] = [

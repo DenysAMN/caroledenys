@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGift } from "@/lib/gifts";
 import { formatBRL, formatBRLShort } from "@/lib/format";
-import QuotaSelector from "@/components/QuotaSelector";
 import GiftThumb from "@/components/GiftThumb";
 import LinkReserveButton from "@/components/LinkReserveButton";
+import CotasReserveSection from "@/components/CotasReserveSection";
+import LivreReserveSection from "@/components/LivreReserveSection";
 
 export const revalidate = 30;
 
@@ -24,6 +25,8 @@ export default async function GiftDetail({
   const remaining = Math.max(0, totalShares - taken);
   const pct = totalShares > 0 ? Math.round((taken / totalShares) * 100) : 0;
 
+  const kind = gift.type === "COTAS" ? "Cotas" : gift.type === "LIVRE" ? "Livre" : "Presente";
+
   return (
     <main>
       <div className="container detail">
@@ -37,9 +40,7 @@ export default async function GiftDetail({
           </Link>
 
           <p className="gift-kicker" style={{ marginTop: 18 }}>
-            {[gift.type === "COTAS" ? "Cotas" : gift.type === "LIVRE" ? "Livre" : "Presente", gift.category]
-              .filter(Boolean)
-              .join(" · ")}
+            {[kind, gift.category].filter(Boolean).join(" · ")}
           </p>
           <h1>{gift.title}</h1>
           {gift.description && <p className="desc">{gift.description}</p>}
@@ -60,14 +61,18 @@ export default async function GiftDetail({
                 </span>
               </div>
 
-              {!done && gift.share_cents != null && (
-                <div style={{ marginTop: 24 }}>
-                  <p style={{ fontSize: 14, color: "var(--muted)" }}>
-                    Cada cota vale {formatBRL(gift.share_cents)}
-                  </p>
-                  <QuotaSelector shareCents={gift.share_cents} remaining={remaining} />
-                </div>
-              )}
+              {done ? (
+                <p className="gift-price" style={{ marginTop: 24, color: "var(--marsala)" }}>
+                  Presenteado ♥ obrigado!
+                </p>
+              ) : gift.share_cents != null ? (
+                <CotasReserveSection
+                  giftId={gift.id}
+                  giftTitle={gift.title}
+                  shareCents={gift.share_cents}
+                  remaining={remaining}
+                />
+              ) : null}
             </div>
           )}
 
@@ -91,46 +96,25 @@ export default async function GiftDetail({
                   </a>
                 </p>
               )}
+              <div style={{ marginTop: 30 }}>
+                <LinkReserveButton
+                  giftId={gift.id}
+                  giftTitle={gift.title}
+                  externalUrl={gift.external_url}
+                  status={gift.status}
+                />
+              </div>
             </div>
           )}
 
           {/* ---------- LIVRE ---------- */}
           {gift.type === "LIVRE" && (
-            <div style={{ marginTop: 26 }}>
-              <p className="gift-price" style={{ fontSize: 30 }}>
-                Você escolhe o valor
-              </p>
-              <p style={{ fontSize: 14, color: "var(--muted)", marginTop: 6 }}>
-                Mínimo de {formatBRL(gift.min_cents ?? 2000)}.
-              </p>
-            </div>
+            <LivreReserveSection
+              giftId={gift.id}
+              giftTitle={gift.title}
+              minCents={gift.min_cents ?? 2000}
+            />
           )}
-
-          {/* ---------- CTA ---------- */}
-          <div style={{ marginTop: 30 }}>
-            {gift.type === "LINK" ? (
-              <LinkReserveButton
-                giftId={gift.id}
-                giftTitle={gift.title}
-                externalUrl={gift.external_url}
-                status={gift.status}
-              />
-            ) : done ? (
-              <p className="gift-price" style={{ color: "var(--marsala)" }}>
-                Presenteado ♥ obrigado!
-              </p>
-            ) : (
-              <>
-                <button className="btn" disabled>
-                  Presentear por PIX
-                </button>
-                <p className="note-soft">
-                  As contribuições por PIX abrem na próxima etapa. Enquanto isso, fique
-                  à vontade para escolher o seu. 💛
-                </p>
-              </>
-            )}
-          </div>
         </div>
       </div>
     </main>

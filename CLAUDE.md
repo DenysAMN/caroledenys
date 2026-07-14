@@ -69,7 +69,8 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S3 — fluxo LINK completo (reserva atômica testada ponta a ponta).
+**Sessão concluída:** S4 — fluxos COTAS e LIVRE com PIX e comprovante privado,
+testados ponta a ponta. QR validado com pagamento real de R$ 1 e migrações aplicadas.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
@@ -84,16 +85,13 @@ Casa do Lago, Rio das Ostras/RJ, ao ar livre à beira do lago.
   - `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key `sb_publishable_...`) — leitura pública.
   - `SUPABASE_SERVICE_ROLE_KEY` (secret key `sb_secret_...`) — SÓ servidor, sem `NEXT_PUBLIC_`. Usada nas Server Actions p/ escrever em guests/claims.
   - ⚠️ AS TRÊS precisam estar TAMBÉM na Vercel (Settings > Environment Variables) senão o site publicado não lê presentes nem grava reservas. A `service_role`/`secret` na Vercel NÃO pode ter `NEXT_PUBLIC_` no nome.
-- Chave PIX (do dono): `denysaugusto2015@gmail.com` — entra como variável de ambiente no servidor na S4, NUNCA no código versionado.
+- Chave PIX do dono: configurada somente em `PIX_KEY` no ambiente do servidor,
+  nunca no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 4 — COTAS + LIVRE + tela de PIX. Modal de cotas chamando
-`reserve_shares` (mesma pilha do LINK: Server Action + service_role), fluxo LIVRE cria
-claim direto, tela `/pagamento/[claimId]` com QR Code PIX (lib `pix-utils` ou similar —
-NÃO escrever o CRC na mão), "copia e cola", campo obrigatório payer_name + upload do
-comprovante (bucket privado) → status EM_ANALISE. Chave PIX `denysaugusto2015@gmail.com`
-entra como env var no servidor (nunca no código). VALIDAR o QR no app do banco antes.
-"Pronto" quando: você paga R$ 1 pra si mesmo lendo o QR do site.
+**Próximo passo:** Sessão 5 — painel admin protegido, lista de contribuições em
+`EM_ANALISE`, visualização do comprovante por URL assinada e confirmação manual do
+pagamento por uma única função `confirmarPagamento(claimId)`.
 
 **Padrão de reserva (LINK, já feito — reusar na S4):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
@@ -105,7 +103,7 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 - [x] S1 — Schema + RLS + funções SQL + seed
 - [x] S2 — Home, lista, detalhe (leitura)
 - [x] S3 — Fluxo LINK
-- [ ] S4 — COTAS + LIVRE + PIX
+- [x] S4 — COTAS + LIVRE + PIX
 - [ ] S5 — Admin + fila de confirmação
 - [ ] S6 — RSVP + /meus + mural
 - [ ] S7 — Cron + rate limit + revisão de RLS
@@ -115,8 +113,9 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 **Decisões pendentes:** nenhuma
 
 **Pontos de atenção abertos:**
-- Validar o payload do QR PIX abrindo no app do banco antes de publicar
-- Testar reserva simultânea em 2 celulares antes de publicar
+- Adicionar na Vercel as variáveis `PIX_KEY`, `PIX_MERCHANT_NAME` e
+  `PIX_MERCHANT_CITY` antes de validar o deploy da S4.
+- Testar reserva simultânea em 2 celulares antes de publicar para os convidados.
 
 ---
 
