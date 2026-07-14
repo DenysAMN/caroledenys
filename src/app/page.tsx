@@ -23,8 +23,8 @@ export default async function Home() {
           </h1>
           <p className="date">31 · Janeiro · 2027</p>
           <p className="place">
-            à beira do lago
-            <small>Casa do Lago · Rio das Ostras — RJ</small>
+            Casa do Lago
+            <small>Costazul · Rio das Ostras — RJ</small>
           </p>
 
           <Countdown />
