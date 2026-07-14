@@ -4,6 +4,7 @@ import { getGift } from "@/lib/gifts";
 import { formatBRL, formatBRLShort } from "@/lib/format";
 import QuotaSelector from "@/components/QuotaSelector";
 import GiftThumb from "@/components/GiftThumb";
+import LinkReserveButton from "@/components/LinkReserveButton";
 
 export const revalidate = 30;
 
@@ -105,20 +106,27 @@ export default async function GiftDetail({
             </div>
           )}
 
-          {/* ---------- CTA (as reservas entram na S3/S4) ---------- */}
+          {/* ---------- CTA ---------- */}
           <div style={{ marginTop: 30 }}>
-            {done ? (
+            {gift.type === "LINK" ? (
+              <LinkReserveButton
+                giftId={gift.id}
+                giftTitle={gift.title}
+                externalUrl={gift.external_url}
+                status={gift.status}
+              />
+            ) : done ? (
               <p className="gift-price" style={{ color: "var(--marsala)" }}>
                 Presenteado ♥ obrigado!
               </p>
             ) : (
               <>
                 <button className="btn" disabled>
-                  {gift.type === "LINK" ? "Quero dar este presente" : "Presentear por PIX"}
+                  Presentear por PIX
                 </button>
                 <p className="note-soft">
-                  As reservas abrem em breve — estamos finalizando o site. Enquanto isso,
-                  fique à vontade para escolher o seu. 💛
+                  As contribuições por PIX abrem na próxima etapa. Enquanto isso, fique
+                  à vontade para escolher o seu. 💛
                 </p>
               </>
             )}

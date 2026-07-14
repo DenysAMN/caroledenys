@@ -172,3 +172,37 @@ a { color: inherit; text-decoration: none; }
 .site-footer { text-align: center; padding: 54px 24px; border-top: 1px solid var(--sand); margin-top: 40px; }
 .site-footer .mono { font-family: var(--font-display); font-style: italic; font-size: 30px; color: var(--marsala); }
 .site-footer p { font-size: 12.5px; color: var(--muted); margin-top: 10px; letter-spacing: .04em; }
+
+/* ---------- modal + formulário ---------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(42,35,32,.5); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  animation: fade .2s ease;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  position: relative; width: 100%; max-width: 440px;
+  background: var(--ivory); border: 1px solid var(--sand); border-radius: 6px;
+  padding: 34px 30px; max-height: 90vh; overflow-y: auto;
+}
+.modal-x {
+  position: absolute; top: 12px; right: 16px; border: 0; background: none;
+  font-size: 26px; line-height: 1; color: var(--muted); cursor: pointer;
+}
+.modal-x:hover { color: var(--marsala); }
+.field { display: block; margin-bottom: 16px; }
+.field > span {
+  display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 7px;
+}
+.field input, .field textarea {
+  width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--sand); border-radius: var(--radius);
+  padding: 12px 14px; resize: vertical;
+}
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--marsala); }
+.field-error {
+  font-size: 14px; color: var(--marsala-deep); background: #F6E9E6;
+  border: 1px solid #E7C9C4; border-radius: var(--radius); padding: 12px 14px; margin: 4px 0 8px;
+}
