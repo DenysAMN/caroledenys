@@ -69,7 +69,7 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S2 — Home + lista + detalhe (leitura), Direção A, lendo o banco.
+**Sessão concluída:** S3 — fluxo LINK completo (reserva atômica testada ponta a ponta).
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
@@ -80,21 +80,31 @@ Casa do Lago, Rio das Ostras/RJ, ao ar livre à beira do lago.
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
 - Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
 - Supabase: projeto `caroledenys`, ref `fmkgkpsxzmgnhnsnspdp`, região São Paulo. Migração em `supabase/migrations/`.
-- **Env vars:** local em `.env.local` (gitignored) → `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key `sb_publishable_...`). AS MESMAS DUAS precisam estar na Vercel (Settings > Environment Variables) senão o site publicado não lê os presentes.
+- **Env vars** (em `.env.local`, gitignored):
+  - `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key `sb_publishable_...`) — leitura pública.
+  - `SUPABASE_SERVICE_ROLE_KEY` (secret key `sb_secret_...`) — SÓ servidor, sem `NEXT_PUBLIC_`. Usada nas Server Actions p/ escrever em guests/claims.
+  - ⚠️ AS TRÊS precisam estar TAMBÉM na Vercel (Settings > Environment Variables) senão o site publicado não lê presentes nem grava reservas. A `service_role`/`secret` na Vercel NÃO pode ter `NEXT_PUBLIC_` no nome.
 - Chave PIX (do dono): `denysaugusto2015@gmail.com` — entra como variável de ambiente no servidor na S4, NUNCA no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 3 — Fluxo LINK completo. Modal Nome+WhatsApp+recadinho,
-Server Action chamando `reserve_link` (service_role, NUNCA anon), guest_token no
-localStorage, tela de sucesso, tratar erro `JA_RESERVADO`. Aqui entra a `service_role key`
-no servidor (nova env var, só server, sem `NEXT_PUBLIC_`).
-"Pronto" quando: reservar de dois celulares e um receber `JA_RESERVADO`.
+**Próximo passo:** Sessão 4 — COTAS + LIVRE + tela de PIX. Modal de cotas chamando
+`reserve_shares` (mesma pilha do LINK: Server Action + service_role), fluxo LIVRE cria
+claim direto, tela `/pagamento/[claimId]` com QR Code PIX (lib `pix-utils` ou similar —
+NÃO escrever o CRC na mão), "copia e cola", campo obrigatório payer_name + upload do
+comprovante (bucket privado) → status EM_ANALISE. Chave PIX `denysaugusto2015@gmail.com`
+entra como env var no servidor (nunca no código). VALIDAR o QR no app do banco antes.
+"Pronto" quando: você paga R$ 1 pra si mesmo lendo o QR do site.
+
+**Padrão de reserva (LINK, já feito — reusar na S4):** componente cliente
+(`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
+sobreviver à revalidação. Server Action em `src/app/actions/`, admin client em
+`src/lib/supabaseAdmin.ts`.
 
 **Feito:**
 - [x] S0 — Ambiente + deploy vazio
 - [x] S1 — Schema + RLS + funções SQL + seed
 - [x] S2 — Home, lista, detalhe (leitura)
-- [ ] S3 — Fluxo LINK
+- [x] S3 — Fluxo LINK
 - [ ] S4 — COTAS + LIVRE + PIX
 - [ ] S5 — Admin + fila de confirmação
 - [ ] S6 — RSVP + /meus + mural
