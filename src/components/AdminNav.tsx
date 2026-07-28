@@ -15,6 +15,8 @@ export default async function AdminNav() {
       <nav aria-label="Navegação administrativa">
         <Link href="/admin">Conferência</Link>
         <Link href="/admin/presentes">Presentes</Link>
+        <Link href="/admin/convidados">Convidados</Link>
+        <Link href="/admin/recados">Recados</Link>
       </nav>
       <form action={logout}>
         <button type="submit" className="admin-logout">Sair</button>

@@ -400,3 +400,165 @@ body:has(.admin-root) { background: #f4efe6; }
   .admin-current-image { width: 100%; height: auto; aspect-ratio: 4/3; }
   .admin-form-submit .btn { width: 100%; }
 }
+
+/* ---------- S6: cartão-resposta ---------- */
+.rsvp-page { padding: 72px 0 96px; background: #f6efe5; }
+.rsvp-layout {
+  display: grid; grid-template-columns: minmax(260px, .8fr) minmax(500px, 1.2fr);
+  gap: clamp(42px, 8vw, 96px); align-items: start;
+}
+.rsvp-intro { position: sticky; top: 110px; padding-top: 38px; }
+.rsvp-intro .rule { margin-inline: 0; }
+.rsvp-intro h1 { max-width: 440px; font-size: clamp(48px, 7vw, 72px); color: var(--marsala-deep); }
+.rsvp-intro > p:not(.eyebrow) { margin-top: 24px; max-width: 440px; color: var(--ink-soft); }
+.rsvp-intro dl { margin-top: 38px; border-top: 1px solid var(--gold); }
+.rsvp-intro dl div { display: grid; grid-template-columns: 90px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--sand-2); }
+.rsvp-intro dt { color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.rsvp-intro dd { color: var(--marsala-deep); font-family: var(--font-display); font-size: 18px; }
+.rsvp-intro .rsvp-not-gate { font-size: 12px; color: var(--muted); }
+.rsvp-not-gate a { color: var(--marsala); text-decoration: underline; }
+.rsvp-card {
+  position: relative; padding: clamp(32px, 6vw, 58px); background: var(--paper);
+  border: 1px solid var(--sand-2); outline: 1px solid var(--sand); outline-offset: -10px;
+  box-shadow: 18px 20px 0 #e8ddcd;
+}
+.rsvp-card::before, .rsvp-card::after {
+  content: ""; position: absolute; width: 22px; height: 22px; border-color: var(--gold); opacity: .7;
+}
+.rsvp-card::before { top: 18px; left: 18px; border-top: 1px solid; border-left: 1px solid; }
+.rsvp-card::after { right: 18px; bottom: 18px; border-right: 1px solid; border-bottom: 1px solid; }
+.rsvp-card-head { text-align: center; padding-bottom: 32px; border-bottom: 1px solid var(--sand); }
+.rsvp-card-head h2 { margin: 12px auto 8px; font-size: clamp(38px, 6vw, 50px); }
+.rsvp-card-head > p:last-child { color: var(--muted); font-size: 13px; }
+.rsvp-choice { margin: 30px 0; padding: 0; border: 0; }
+.rsvp-choice legend { margin-bottom: 10px; color: var(--muted); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
+.rsvp-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rsvp-choice legend { grid-column: 1 / -1; }
+.rsvp-choice label {
+  position: relative; display: flex; min-height: 100px; flex-direction: column; justify-content: center;
+  padding: 18px 18px 18px 42px; border: 1px solid var(--sand); cursor: pointer; transition: border-color .18s, background .18s;
+}
+.rsvp-choice label.selected { border-color: var(--marsala); background: #fbf3f0; }
+.rsvp-choice input { position: absolute; left: 16px; top: 24px; accent-color: var(--marsala); }
+.rsvp-choice span { font-family: var(--font-display); color: var(--marsala-deep); font-size: 22px; line-height: 1.1; }
+.rsvp-choice small { margin-top: 5px; color: var(--muted); font-size: 11px; }
+.rsvp-fields { padding-top: 6px; }
+.rsvp-privacy { margin: 6px 0 20px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.rsvp-submit { width: 100%; }
+.rsvp-success {
+  min-height: 620px; padding: 70px 52px; background: var(--paper); border: 1px solid var(--sand-2);
+  box-shadow: 18px 20px 0 #e8ddcd; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+}
+.rsvp-success > span { display: grid; place-items: center; width: 108px; height: 108px; margin-bottom: 30px; border: 1px solid var(--gold); border-radius: 50%; color: var(--marsala); font: italic 31px var(--font-display); }
+.rsvp-success h2 { max-width: 460px; margin: 12px 0; font-size: clamp(40px, 7vw, 58px); }
+.rsvp-success > p:not(.eyebrow) { max-width: 400px; margin-bottom: 28px; color: var(--muted); }
+
+/* ---------- S6: envelope / meus presentes ---------- */
+.my-gifts-page { min-height: 70vh; padding: 76px 0 100px; background: #f2eadf; }
+.my-gifts-envelope { position: relative; width: min(760px, 88%); height: 92px; margin: 0 auto -38px; background: #dfd0bd; border: 1px solid #d0bea8; }
+.my-gifts-envelope span { position: absolute; top: 20px; left: 28px; color: var(--muted); font: italic 18px var(--font-display); }
+.my-gifts-envelope i { position: absolute; left: 50%; bottom: 8px; width: 58px; height: 58px; border-radius: 50%; background: var(--marsala-deep); transform: translateX(-50%); }
+.my-gifts-sheet, .my-gifts-state {
+  position: relative; width: min(880px, 100%); margin: 0 auto; padding: clamp(34px, 7vw, 64px);
+  background: var(--paper); border: 1px solid var(--sand-2); box-shadow: 14px 16px 0 #dfd2c0;
+}
+.my-gifts-sheet > header { padding-bottom: 30px; border-bottom: 1px solid var(--gold); }
+.my-gifts-sheet > header h2 { margin-top: 8px; font-size: clamp(42px, 7vw, 62px); }
+.my-gifts-sheet > header > p:last-child { margin-top: 8px; color: var(--muted); }
+.my-gifts-list { list-style: none; margin: 0; padding: 0; }
+.my-gifts-list li { display: grid; grid-template-columns: 42px 1fr 210px; gap: 22px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--sand); }
+.my-gifts-number { align-self: start; padding-top: 5px; color: var(--gold); font-size: 11px; letter-spacing: .12em; }
+.my-gifts-copy h3 { margin: 4px 0 6px; font-size: 29px; }
+.my-gifts-copy > p:not(.gift-kicker) { color: var(--ink-soft); font-size: 14px; }
+.my-gifts-copy time { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.my-gifts-status { display: grid; justify-items: end; gap: 10px; text-align: right; }
+.my-gifts-status strong { color: var(--marsala-deep); font: 500 19px var(--font-display); }
+.my-gifts-status .btn { width: 100%; padding: 10px 12px; font-size: 10px; }
+.my-gifts-state { min-height: 480px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.my-gifts-state h2 { margin: 18px 0 10px; font-size: clamp(38px, 7vw, 54px); }
+.my-gifts-state > p { max-width: 500px; color: var(--muted); }
+.my-gifts-state .btn { margin-top: 28px; }
+.my-gifts-seal { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--marsala-deep); color: var(--ivory); font: italic 24px var(--font-display); }
+
+/* ---------- S6: livro de visitas ---------- */
+.guestbook-page { padding: 72px 0 96px; }
+.guestbook-head { max-width: 680px; margin: 0 auto 62px; text-align: center; }
+.guestbook-head h1 { font-size: clamp(58px, 10vw, 88px); }
+.guestbook-head > p:last-child { max-width: 520px; margin: 18px auto 0; color: var(--muted); }
+.guestbook-list { list-style: none; width: min(840px, 100%); margin: 0 auto; padding: 0; border-top: 1px solid var(--gold); }
+.guestbook-list li { position: relative; padding: 48px clamp(28px, 7vw, 80px); border-bottom: 1px solid var(--sand-2); }
+.guestbook-list li:nth-child(even) { text-align: right; }
+.guestbook-index { position: absolute; top: 22px; left: 0; color: var(--gold); font-size: 10px; letter-spacing: .15em; }
+.guestbook-list li:nth-child(even) .guestbook-index { right: 0; left: auto; }
+.guestbook-list blockquote { color: var(--ink); font: italic 500 clamp(30px, 5vw, 45px)/1.25 var(--font-display); overflow-wrap: anywhere; }
+.guestbook-list footer { display: flex; gap: 10px; align-items: center; margin-top: 22px; color: var(--muted); font-size: 11px; letter-spacing: .05em; }
+.guestbook-list li:nth-child(even) footer { justify-content: flex-end; }
+.guestbook-list footer strong { color: var(--marsala-deep); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.guestbook-empty { max-width: 680px; margin: 0 auto; padding: 70px 30px; border-block: 1px solid var(--sand-2); text-align: center; }
+.guestbook-empty > span { color: var(--gold); font: italic 58px var(--font-display); }
+.guestbook-empty h2 { margin-top: 8px; font-size: 42px; }
+.guestbook-empty p { margin-top: 12px; color: var(--muted); }
+.guestbook-foot { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 52px; }
+
+/* ---------- S6: admin convidados e moderação ---------- */
+.admin-guest-list { margin-top: 38px; border-top: 1px solid var(--sand-2); }
+.admin-guest-list > header, .admin-guest-list > article {
+  display: grid; grid-template-columns: minmax(220px, 1.4fr) minmax(160px, 1fr) 120px 120px 110px;
+  gap: 18px; align-items: center; padding: 16px 12px; border-bottom: 1px solid var(--sand-2);
+}
+.admin-guest-list > header { color: var(--muted); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; }
+.admin-guest-list > article { min-height: 82px; background: rgba(255,255,255,.32); }
+.admin-guest-name strong { display: block; font: 500 22px var(--font-display); }
+.admin-guest-name small { display: block; max-width: 360px; margin-top: 4px; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-guest-list article > a { color: var(--marsala-deep); font-size: 12px; }
+.admin-guest-list article > span, .admin-guest-list article > time { color: var(--ink-soft); font-size: 12px; }
+.admin-message-list { margin-top: 38px; border-top: 1px solid var(--gold); }
+.admin-message {
+  display: grid; grid-template-columns: 42px minmax(0, 1fr) 170px; gap: 24px;
+  padding: 30px 0; border-bottom: 1px solid var(--sand-2);
+}
+.admin-message.is-approved { background: rgba(255,255,255,.28); }
+.admin-message-index { padding-top: 4px; color: var(--gold); font-size: 10px; letter-spacing: .12em; }
+.admin-message-meta { display: flex; gap: 14px; color: var(--muted); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+.admin-message-copy blockquote { margin-top: 10px; font: italic 500 clamp(27px, 4vw, 38px)/1.2 var(--font-display); overflow-wrap: anywhere; }
+.admin-message-copy > p { margin-top: 12px; color: var(--muted); font-size: 12px; }
+.admin-message-copy > p strong { color: var(--marsala-deep); text-transform: uppercase; letter-spacing: .08em; }
+.admin-message-decision { display: grid; align-content: center; justify-items: end; gap: 12px; }
+.admin-message-actions { width: 100%; }
+.admin-message-actions .btn { width: 100%; padding: 10px 12px; font-size: 10px; }
+.admin-message-actions .admin-action-message { margin-top: 8px; text-align: right; }
+
+@media (max-width: 860px) {
+  .rsvp-layout { grid-template-columns: 1fr; }
+  .rsvp-intro { position: static; padding-top: 0; }
+  .rsvp-intro h1 { max-width: 600px; }
+  .my-gifts-list li { grid-template-columns: 34px 1fr; }
+  .my-gifts-status { grid-column: 2; justify-items: start; text-align: left; }
+  .my-gifts-status .btn { width: auto; }
+  .admin-guest-list > header { display: none; }
+  .admin-guest-list > article { grid-template-columns: minmax(0, 1fr) 120px; gap: 8px 18px; }
+  .admin-guest-name { grid-column: 1 / -1; }
+  .admin-message { grid-template-columns: 32px minmax(0, 1fr); }
+  .admin-message-decision { grid-column: 2; justify-items: start; }
+  .admin-message-actions { width: auto; min-width: 150px; }
+}
+
+@media (max-width: 580px) {
+  .nav { gap: 10px; }
+  .nav a { font-size: 10px; letter-spacing: .05em; }
+  .rsvp-page, .guestbook-page, .my-gifts-page { padding-block: 44px 70px; }
+  .rsvp-card { padding: 36px 24px; box-shadow: 9px 10px 0 #e8ddcd; }
+  .rsvp-choice { grid-template-columns: 1fr; }
+  .rsvp-success { min-height: 500px; padding: 48px 26px; box-shadow: 9px 10px 0 #e8ddcd; }
+  .my-gifts-envelope { width: 92%; }
+  .my-gifts-sheet, .my-gifts-state { padding: 34px 22px; box-shadow: 8px 9px 0 #dfd2c0; }
+  .my-gifts-list li { grid-template-columns: 28px minmax(0, 1fr); gap: 12px; }
+  .my-gifts-status .btn { width: 100%; }
+  .guestbook-list li, .guestbook-list li:nth-child(even) { padding: 38px 20px; text-align: left; }
+  .guestbook-list li:nth-child(even) .guestbook-index { right: auto; left: 0; }
+  .guestbook-list li:nth-child(even) footer { justify-content: flex-start; }
+  .admin-guest-list > article { grid-template-columns: 1fr auto; padding-inline: 0; }
+  .admin-message { display: block; position: relative; padding: 28px 0; }
+  .admin-message-index { position: absolute; top: 10px; right: 0; }
+  .admin-message-decision { margin-top: 18px; }
+}

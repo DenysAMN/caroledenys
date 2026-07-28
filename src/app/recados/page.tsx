@@ -1,25 +1,68 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getPublicMessages } from "@/lib/public-messages";
 
 export const metadata: Metadata = {
   title: "Recados · Carol & Denys",
+  description: "O livro de visitas do casamento de Carol e Denys.",
 };
 
-export default function RecadosPage() {
+export const revalidate = 30;
+
+const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+
+export default async function RecadosPage() {
+  const messages = await getPublicMessages();
+
   return (
-    <main className="section">
-      <div className="container" style={{ textAlign: "center", maxWidth: 560 }}>
-        <p className="eyebrow">Mural</p>
-        <hr className="rule" />
-        <h2 style={{ fontSize: 40 }}>Recados em breve</h2>
-        <p style={{ color: "var(--muted)", marginTop: 12 }}>
-          Aqui vão aparecer os recadinhos de quem confirmou presença e presenteou.
-          Ainda estamos montando este cantinho. 💛
-        </p>
-        <div style={{ marginTop: 30 }}>
-          <Link href="/" className="btn btn-ghost">
-            Voltar ao início
-          </Link>
+    <main className="guestbook-page">
+      <div className="container">
+        <header className="guestbook-head">
+          <p className="eyebrow">Livro de visitas</p>
+          <hr className="rule" />
+          <h1>Palavras que ficam</h1>
+          <p>
+            Carinhos enviados por quem caminha com a gente. Cada recado é lido
+            pelos noivos antes de aparecer aqui.
+          </p>
+        </header>
+
+        {messages.length > 0 ? (
+          <ol className="guestbook-list">
+            {messages.map((entry, index) => (
+              <li key={`${entry.source}-${entry.createdAt}-${index}`}>
+                <span className="guestbook-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <blockquote>“{entry.message}”</blockquote>
+                <footer>
+                  <strong>{entry.name}</strong>
+                  <span aria-hidden="true">·</span>
+                  <time dateTime={entry.createdAt}>
+                    {dateFormatter.format(new Date(entry.createdAt))}
+                  </time>
+                </footer>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <div className="guestbook-empty">
+            <span aria-hidden="true">“ ”</span>
+            <h2>As primeiras páginas estão esperando.</h2>
+            <p>
+              Os recados enviados com presentes e confirmações aparecerão aqui
+              depois de aprovados.
+            </p>
+          </div>
+        )}
+
+        <div className="guestbook-foot">
+          <Link href="/confirmar" className="btn">Confirmar presença</Link>
+          <Link href="/presentes" className="btn btn-ghost">Ver presentes</Link>
         </div>
       </div>
     </main>

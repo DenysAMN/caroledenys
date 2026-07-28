@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:s5-integration": "node --env-file=.env.local scripts/s5-integration.mjs"
+    "test:s5-integration": "node --env-file=.env.local scripts/s5-integration.mjs",
+    "test:s6-integration": "node --env-file=.env.local scripts/s6-integration.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.3",

@@ -69,8 +69,8 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S4 — fluxos COTAS e LIVRE com PIX e comprovante privado,
-testados ponta a ponta. QR validado com pagamento real de R$ 1 e migrações aplicadas.
+**Sessão concluída:** S6 — RSVP, área pessoal `/meus`, mural moderado e gestão
+administrativa de convidados/recados, testados com a migração aplicada no Supabase.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
@@ -90,15 +90,21 @@ Casa do Lago, Rio das Ostras/RJ.
   nunca no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 6 — RSVP, área `/meus`, mural de recados e moderação no
-painel administrativo.
+**Próximo passo:** Sessão 7 — cron de expiração, rate limit e revisão completa de RLS.
 
 **S5 entregue:** `/admin` usa Supabase Auth SSR e permite conferir pagamentos,
 confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funções
 `confirm_payment` e `reject_payment` são atômicas e exclusivas da `service_role`;
 imagens do catálogo ficam no bucket público `gift-images` com limite de 4 MB.
 
-**Padrão de reserva (LINK, já feito — reusar na S4):** componente cliente
+**S6 entregue:** `/confirmar` registra ou atualiza RSVP usando o token local;
+`/meus` reconstrói o histórico e o acesso à tela PIX; `/recados` lê exclusivamente
+a view segura `public_messages`. O admin possui lista de convidados, métricas,
+exportação CSV e moderação sem apagar o texto original. O teste integrado
+`npm run test:s6-integration` prova que a anon key não lê `guests`/`claims` e que
+telefone e token não aparecem no mural.
+
+**Padrão de reserva (LINK):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
 sobreviver à revalidação. Server Action em `src/app/actions/`, admin client em
 `src/lib/supabaseAdmin.ts`.
@@ -110,7 +116,7 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 - [x] S3 — Fluxo LINK
 - [x] S4 — COTAS + LIVRE + PIX
 - [x] S5 — Admin + fila de confirmação
-- [ ] S6 — RSVP + /meus + mural
+- [x] S6 — RSVP + /meus + mural
 - [ ] S7 — Cron + rate limit + revisão de RLS
 - [ ] S8 — Visual, fotos, textos
 - [ ] S9 — Testes finais
