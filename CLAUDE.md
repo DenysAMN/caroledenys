@@ -75,7 +75,7 @@ testados ponta a ponta. QR validado com pagamento real de R$ 1 e migrações apl
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
 `#FBF7F0` + fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
-Casa do Lago, Rio das Ostras/RJ, ao ar livre à beira do lago.
+Casa do Lago, Rio das Ostras/RJ.
 
 **Infra (links importantes):**
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
@@ -84,14 +84,19 @@ Casa do Lago, Rio das Ostras/RJ, ao ar livre à beira do lago.
 - **Env vars** (em `.env.local`, gitignored):
   - `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key `sb_publishable_...`) — leitura pública.
   - `SUPABASE_SERVICE_ROLE_KEY` (secret key `sb_secret_...`) — SÓ servidor, sem `NEXT_PUBLIC_`. Usada nas Server Actions p/ escrever em guests/claims.
-  - ⚠️ AS TRÊS precisam estar TAMBÉM na Vercel (Settings > Environment Variables) senão o site publicado não lê presentes nem grava reservas. A `service_role`/`secret` na Vercel NÃO pode ter `NEXT_PUBLIC_` no nome.
+  - `ADMIN_EMAIL` — único e-mail autorizado no painel dos noivos.
+  - ⚠️ Todas precisam estar TAMBÉM na Vercel (Settings > Environment Variables). A `service_role`/`secret` na Vercel NÃO pode ter `NEXT_PUBLIC_` no nome.
 - Chave PIX do dono: configurada somente em `PIX_KEY` no ambiente do servidor,
   nunca no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 5 — painel admin protegido, lista de contribuições em
-`EM_ANALISE`, visualização do comprovante por URL assinada e confirmação manual do
-pagamento por uma única função `confirmarPagamento(claimId)`.
+**Próximo passo:** Sessão 6 — RSVP, área `/meus`, mural de recados e moderação no
+painel administrativo.
+
+**S5 entregue:** `/admin` usa Supabase Auth SSR e permite conferir pagamentos,
+confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funções
+`confirm_payment` e `reject_payment` são atômicas e exclusivas da `service_role`;
+imagens do catálogo ficam no bucket público `gift-images` com limite de 4 MB.
 
 **Padrão de reserva (LINK, já feito — reusar na S4):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
@@ -104,7 +109,7 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 - [x] S2 — Home, lista, detalhe (leitura)
 - [x] S3 — Fluxo LINK
 - [x] S4 — COTAS + LIVRE + PIX
-- [ ] S5 — Admin + fila de confirmação
+- [x] S5 — Admin + fila de confirmação
 - [ ] S6 — RSVP + /meus + mural
 - [ ] S7 — Cron + rate limit + revisão de RLS
 - [ ] S8 — Visual, fotos, textos
@@ -113,8 +118,6 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 **Decisões pendentes:** nenhuma
 
 **Pontos de atenção abertos:**
-- Adicionar na Vercel as variáveis `PIX_KEY`, `PIX_MERCHANT_NAME` e
-  `PIX_MERCHANT_CITY` antes de validar o deploy da S4.
 - Testar reserva simultânea em 2 celulares antes de publicar para os convidados.
 
 ---

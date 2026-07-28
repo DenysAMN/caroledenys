@@ -54,7 +54,7 @@ concluídos. A fila aparece logo abaixo porque é a tarefa mais frequente.
 
 Lista todos os presentes, inclusive ocultos. Permite criar, editar, excluir, ocultar
 e reordenar LINK, COTAS e LIVRE. O formulário aceita imagem JPG, PNG ou WebP de até
-5 MB. As imagens ficam no bucket público `gift-images`; toda escrita ocorre no
+4 MB. As imagens ficam no bucket público `gift-images`; toda escrita ocorre no
 servidor autenticado. Conforme decisão do dono, campos financeiros permanecem
 editáveis mesmo depois de reservas.
 
@@ -82,4 +82,3 @@ central. Em celular, a navegação vira uma faixa horizontal e os registros empi
 - Login, dashboard, fila e CRUD são verificados em desktop e celular.
 - S5 está pronta quando o pagamento da S4 pode ser aprovado pelo painel e um presente
   pode ser criado/editado com imagem.
-

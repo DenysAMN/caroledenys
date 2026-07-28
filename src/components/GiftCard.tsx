@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Gift } from "@/lib/types";
 import { formatBRLShort } from "@/lib/format";
@@ -17,7 +18,17 @@ export default function GiftCard({ gift }: { gift: Gift }) {
     <Link href={`/presentes/${gift.id}`} className="gift-card">
       <div className="gift-thumb">
         <span className="badge">{TYPE_LABEL[gift.type]}</span>
-        <GiftThumb />
+        {gift.image_url ? (
+          <Image
+            src={gift.image_url}
+            alt={gift.title}
+            fill
+            sizes="(max-width: 600px) 100vw, 33vw"
+            className="gift-thumb-image"
+          />
+        ) : (
+          <GiftThumb />
+        )}
         {done && <div className="done">Presenteado ♥</div>}
       </div>
       <div className="gift-body">

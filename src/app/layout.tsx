@@ -21,7 +21,7 @@ const jost = Jost({
 export const metadata: Metadata = {
   title: "Carol & Denys · 31.01.2027",
   description:
-    "O casamento da Carol e do Denys — à beira do lago, em Rio das Ostras. Lista de presentes e confirmação de presença.",
+    "O casamento da Carol e do Denys na Casa do Lago, em Rio das Ostras. Lista de presentes e confirmação de presença.",
 };
 
 export default function RootLayout({

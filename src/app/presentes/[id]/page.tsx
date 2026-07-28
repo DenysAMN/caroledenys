@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGift } from "@/lib/gifts";
@@ -31,7 +32,18 @@ export default async function GiftDetail({
     <main>
       <div className="container detail">
         <div className="detail-media">
-          <GiftThumb />
+          {gift.image_url ? (
+            <Image
+              src={gift.image_url}
+              alt={gift.title}
+              fill
+              sizes="(max-width: 820px) 100vw, 50vw"
+              className="detail-image"
+              priority
+            />
+          ) : (
+            <GiftThumb />
+          )}
         </div>
 
         <div>
