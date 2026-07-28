@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
 import GiftCard from "@/components/GiftCard";
+import LakeMark from "@/components/LakeMark";
 import { getGifts } from "@/lib/gifts";
 
 // Revalida a cada 30s para a prévia de presentes acompanhar o banco.
@@ -11,50 +12,75 @@ export default async function Home() {
   const preview = gifts.slice(0, 3);
 
   return (
-    <main>
-      <section className="hero">
-        <div className="container">
-          <p className="eyebrow">Vamos casar</p>
-          <hr className="rule" />
-          <h1 className="names">
-            Carol
-            <span className="amp">&amp;</span>
-            Denys
-          </h1>
-          <p className="date">31 · Janeiro · 2027</p>
-          <p className="place">
-            Casa do Lago
-            <small>Costazul · Rio das Ostras — RJ</small>
-          </p>
+    <main className="home-page">
+      <section className="home-cover">
+        <div className="container home-cover-grid">
+          <div className="home-cover-copy">
+            <p className="eyebrow">Vamos casar</p>
+            <p className="home-overline">Domingo · 16h</p>
+            <h1 className="home-names">
+              <span>Carol</span>
+              <i>&amp;</i>
+              <span>Denys</span>
+            </h1>
+            <p className="home-date">31 · Janeiro · 2027</p>
+            <p className="home-place">
+              Casa do Lago
+              <small>Costazul · Rio das Ostras — RJ</small>
+            </p>
 
-          <Countdown />
+            <Countdown />
 
-          <div className="hero-cta">
-            <Link href="/presentes" className="btn">
-              Lista de presentes
-            </Link>
-            <Link href="/confirmar" className="btn btn-ghost">
-              Confirmar presença
+            <div className="home-actions">
+              <Link href="/presentes" className="btn">
+                Lista de presentes
+              </Link>
+              <Link href="/confirmar" className="btn btn-ghost">
+                Confirmar presença
+              </Link>
+            </div>
+          </div>
+          <div className="home-cover-art">
+            <span className="home-cover-index">C · D</span>
+            <LakeMark />
+            <div className="home-cover-caption">
+              <span>Casa do Lago</span>
+              <small>31.01.2027</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-intro">
+        <div className="container home-intro-grid">
+          <div className="home-intro-copy">
+            <p className="eyebrow">Nosso dia</p>
+            <h2>Um domingo para guardar.</h2>
+            <p>
+              Estamos preparando um encontro para celebrar o amor e reunir as
+              pessoas que fazem parte da nossa vida. A Casa do Lago abre as
+              portas, e a gente espera por você.
+            </p>
+            <Link href="/nos" className="text-link">
+              Conheça a celebração <span aria-hidden="true">→</span>
             </Link>
           </div>
-
-          <svg
-            className="lake"
-            viewBox="0 0 720 150"
-            preserveAspectRatio="none"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <ellipse cx="560" cy="44" rx="18" ry="18" fill="#C0A050" opacity=".45" />
-            <path d="M0 92 C120 70 220 80 320 86 C440 93 560 66 720 84 L720 150 L0 150 Z" fill="#EFE6D6" />
-            <path d="M0 116 C150 104 260 122 380 114 C520 105 620 122 720 112 L720 150 L0 150 Z" fill="#E3D6BE" />
-          </svg>
+          <aside className="home-date-card" aria-label="Data e local do casamento">
+            <time dateTime="2027-01-31T16:00:00-03:00">
+              <strong>31</strong>
+              <span>Janeiro</span>
+              <small>2027 · 16h</small>
+            </time>
+            <div>
+              <span>Casa do Lago</span>
+              <small>Rio das Ostras · RJ</small>
+            </div>
+          </aside>
         </div>
       </section>
 
       {preview.length > 0 && (
-        <section className="section" style={{ paddingTop: 24 }}>
+        <section className="section home-gifts">
           <div className="container">
             <div className="section-head">
               <p className="eyebrow">Presentear</p>
@@ -69,7 +95,7 @@ export default async function Home() {
                 <GiftCard key={g.id} gift={g} />
               ))}
             </div>
-            <div style={{ textAlign: "center", marginTop: 40 }}>
+            <div className="home-gifts-action">
               <Link href="/presentes" className="btn">
                 Ver todos os presentes
               </Link>

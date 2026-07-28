@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MyGifts from "@/components/MyGifts";
 
 export const metadata: Metadata = {
-  title: "Meus presentes · Carol & Denys",
+  title: "Meus presentes",
   description: "Acompanhe os presentes que você reservou para Carol e Denys.",
 };
 

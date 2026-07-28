@@ -3,7 +3,7 @@ import Link from "next/link";
 import RsvpForm from "@/components/RsvpForm";
 
 export const metadata: Metadata = {
-  title: "Confirmar presença · Carol & Denys",
+  title: "Confirmar presença",
   description: "Confirme sua presença no casamento de Carol e Denys.",
 };
 

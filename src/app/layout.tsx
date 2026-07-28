@@ -19,9 +19,21 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Carol & Denys · 31.01.2027",
+  metadataBase: new URL("https://caroledenys.vercel.app"),
+  title: {
+    default: "Carol & Denys · 31.01.2027",
+    template: "%s · Carol & Denys",
+  },
   description:
     "O casamento da Carol e do Denys na Casa do Lago, em Rio das Ostras. Lista de presentes e confirmação de presença.",
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "Carol & Denys",
+    title: "Carol & Denys · 31.01.2027",
+    description:
+      "Nosso casamento na Casa do Lago, em Rio das Ostras. Veja os detalhes, confirme sua presença e conheça nossa lista.",
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +48,7 @@ export default function RootLayout({
               C &amp; D
             </Link>
             <nav className="nav">
+              <Link href="/nos">Nós</Link>
               <Link href="/presentes">Presentes</Link>
               <Link href="/confirmar">Presença</Link>
               <Link href="/recados">Recados</Link>

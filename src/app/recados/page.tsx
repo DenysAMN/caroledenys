@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getPublicMessages } from "@/lib/public-messages";
 
 export const metadata: Metadata = {
-  title: "Recados · Carol & Denys",
+  title: "Recados",
   description: "O livro de visitas do casamento de Carol e Denys.",
 };
 

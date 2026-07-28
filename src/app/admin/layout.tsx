@@ -3,7 +3,7 @@ import AdminNav from "@/components/AdminNav";
 import { getAdminUser } from "@/lib/admin-auth";
 
 export const metadata: Metadata = {
-  title: "Painel dos noivos · Carol & Denys",
+  title: "Painel dos noivos",
   robots: { index: false, follow: false },
 };
 

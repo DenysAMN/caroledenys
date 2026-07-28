@@ -1,32 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  getCountdownParts,
+  type CountdownParts,
+} from "@/lib/countdown";
 
-// Contagem regressiva até a cerimônia. Deriva do relógio do navegador e
-// atualiza a cada segundo. Renderiza vazio até "montar" no cliente para
-// evitar mismatch de hidratação (servidor e cliente veriam horas diferentes).
-
-const TARGET = new Date("2027-01-31T16:00:00-03:00").getTime();
-
-type Parts = { d: number; h: number; m: number; s: number };
-
-function diff(): Parts {
-  const ms = Math.max(0, TARGET - Date.now());
-  const total = Math.floor(ms / 1000);
-  return {
-    d: Math.floor(total / 86400),
-    h: Math.floor((total % 86400) / 3600),
-    m: Math.floor((total % 3600) / 60),
-    s: total % 60,
-  };
-}
+// Atualiza a cada segundo no navegador. O estado vazio inicial evita que o
+// servidor e o primeiro render do cliente discordem sobre o segundo atual.
 
 export default function Countdown() {
-  const [p, setP] = useState<Parts | null>(null);
+  const [parts, setParts] = useState<CountdownParts | null>(null);
 
   useEffect(() => {
-    const first = window.setTimeout(() => setP(diff()), 0);
-    const id = setInterval(() => setP(diff()), 1000);
+    const first = window.setTimeout(() => setParts(getCountdownParts()), 0);
+    const id = window.setInterval(
+      () => setParts(getCountdownParts()),
+      1_000
+    );
     return () => {
       clearTimeout(first);
       clearInterval(id);
@@ -34,10 +25,10 @@ export default function Countdown() {
   }, []);
 
   const cells: [number | string, string][] = [
-    [p?.d ?? "—", "dias"],
-    [p?.h ?? "—", "horas"],
-    [p?.m ?? "—", "min"],
-    [p?.s ?? "—", "seg"],
+    [parts?.days ?? "—", "dias"],
+    [parts?.hours ?? "—", "horas"],
+    [parts?.minutes ?? "—", "min"],
+    [parts?.seconds ?? "—", "seg"],
   ];
 
   return (

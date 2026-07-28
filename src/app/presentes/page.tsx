@@ -4,7 +4,7 @@ import { getGifts } from "@/lib/gifts";
 import { supabaseConfigured } from "@/lib/supabase";
 
 export const metadata: Metadata = {
-  title: "Lista de presentes · Carol & Denys",
+  title: "Lista de presentes",
 };
 
 // Revalida a cada 30s: contadores de cota mudam quando alguém reserva.

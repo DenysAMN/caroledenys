@@ -69,8 +69,8 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S7 — expiração automática, rate limit das reservas e
-auditoria completa de RLS/RPC, testados com a migração aplicada no Supabase.
+**Sessão concluída:** S8 — nova capa editorial, página `/nos`, contagem regressiva
+testável e polimento responsivo/acessível, revisados em celular e desktop.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
@@ -90,8 +90,8 @@ Casa do Lago, Rio das Ostras/RJ.
   nunca no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 8 — fotos e textos reais, página `/nos` e polimento
-visual/performance do site.
+**Próximo passo:** Sessão 9 — testes finais, concorrência em dois aparelhos,
+auditoria de performance e checklist para enviar o site aos convidados.
 
 **S5 entregue:** `/admin` usa Supabase Auth SSR e permite conferir pagamentos,
 confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funções
@@ -113,6 +113,13 @@ grants exclusivos da `service_role`; `guests`, `claims` e
 `npm run test:s7-integration` valida cron, expiração, devolução de cotas, bloqueio
 da sexta tentativa e negação anônima de leitura, escrita e execução.
 
+**S8 entregue:** a home agora funciona como capa de convite, com assinatura
+vetorial inspirada no arco e no lago do local; `/nos` reúne celebração, data,
+endereço e rota do mapa sem inventar fatos pessoais. A contagem regressiva usa
+cálculo puro coberto por testes, os metadados seguem um template único e as rotas
+públicas foram auditadas em 390×844 e 1440×900. As fotos do catálogo continuam
+vindo do admin com `next/image`.
+
 **Padrão de reserva (LINK):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
 sobreviver à revalidação. Server Action em `src/app/actions/`, admin client em
@@ -127,13 +134,15 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 - [x] S5 — Admin + fila de confirmação
 - [x] S6 — RSVP + /meus + mural
 - [x] S7 — Cron + rate limit + revisão de RLS
-- [ ] S8 — Visual, fotos, textos
+- [x] S8 — Visual, fotos, textos
 - [ ] S9 — Testes finais
 
 **Decisões pendentes:** nenhuma
 
 **Pontos de atenção abertos:**
 - Testar reserva simultânea em 2 celulares antes de publicar para os convidados.
+- Adicionar as fotos reais do casal quando os arquivos originais forem entregues:
+  `public/images/carol-denys-hero.webp` e `public/images/carol-denys-nos.webp`.
 
 ---
 
