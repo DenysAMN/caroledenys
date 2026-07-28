@@ -69,8 +69,8 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S6 — RSVP, área pessoal `/meus`, mural moderado e gestão
-administrativa de convidados/recados, testados com a migração aplicada no Supabase.
+**Sessão concluída:** S7 — expiração automática, rate limit das reservas e
+auditoria completa de RLS/RPC, testados com a migração aplicada no Supabase.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
@@ -90,7 +90,8 @@ Casa do Lago, Rio das Ostras/RJ.
   nunca no código versionado.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
-**Próximo passo:** Sessão 7 — cron de expiração, rate limit e revisão completa de RLS.
+**Próximo passo:** Sessão 8 — fotos e textos reais, página `/nos` e polimento
+visual/performance do site.
 
 **S5 entregue:** `/admin` usa Supabase Auth SSR e permite conferir pagamentos,
 confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funções
@@ -103,6 +104,14 @@ a view segura `public_messages`. O admin possui lista de convidados, métricas,
 exportação CSV e moderação sem apagar o texto original. O teste integrado
 `npm run test:s6-integration` prova que a anon key não lê `guests`/`claims` e que
 telefone e token não aparecem no mural.
+
+**S7 entregue:** Supabase Cron executa `expire_stale_claims()` a cada 5 minutos;
+reservas LINK/COTAS/LIVRE compartilham limite de 5 tentativas por IP a cada 60
+segundos. O IP é transformado em HMAC antes de chegar ao banco. RPCs internas têm
+grants exclusivos da `service_role`; `guests`, `claims` e
+`reservation_rate_limits` permanecem sem acesso público. O teste
+`npm run test:s7-integration` valida cron, expiração, devolução de cotas, bloqueio
+da sexta tentativa e negação anônima de leitura, escrita e execução.
 
 **Padrão de reserva (LINK):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
@@ -117,7 +126,7 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 - [x] S4 — COTAS + LIVRE + PIX
 - [x] S5 — Admin + fila de confirmação
 - [x] S6 — RSVP + /meus + mural
-- [ ] S7 — Cron + rate limit + revisão de RLS
+- [x] S7 — Cron + rate limit + revisão de RLS
 - [ ] S8 — Visual, fotos, textos
 - [ ] S9 — Testes finais
 

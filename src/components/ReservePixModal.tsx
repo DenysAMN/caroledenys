@@ -33,6 +33,8 @@ function mensagemErro(code: string): string {
       return "O valor está abaixo do mínimo. Aumente um pouquinho.";
     case "DADOS_INVALIDOS":
       return "Confira o nome e o WhatsApp (com DDD).";
+    case "MUITAS_TENTATIVAS":
+      return "Muitas tentativas. Aguarde um minuto e tente novamente.";
     default:
       return "Algo deu errado. Tente de novo em instantes.";
   }

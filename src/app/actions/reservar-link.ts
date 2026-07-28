@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
+import { consumeReservationRateLimit } from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabaseAdmin";
 import {
   acharOuCriarConvidado,
@@ -12,7 +14,14 @@ import {
 
 export type ReserveResult =
   | { ok: true; token: string | null }
-  | { ok: false; error: "JA_RESERVADO" | "DADOS_INVALIDOS" | "ERRO" };
+  | {
+      ok: false;
+      error:
+        | "JA_RESERVADO"
+        | "DADOS_INVALIDOS"
+        | "MUITAS_TENTATIVAS"
+        | "ERRO";
+    };
 
 export async function reservarLink(input: {
   giftId: string;
@@ -25,6 +34,9 @@ export async function reservarLink(input: {
   const phone = normalizePhone(input.whatsapp);
   if (nome.length < 2 || nome.length > 120 || !phone) {
     return { ok: false, error: "DADOS_INVALIDOS" };
+  }
+  if (!(await consumeReservationRateLimit(await headers()))) {
+    return { ok: false, error: "MUITAS_TENTATIVAS" };
   }
 
   const admin = createAdminClient();

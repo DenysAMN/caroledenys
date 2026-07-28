@@ -49,6 +49,8 @@ export default function ReserveLinkModal({
         setErro("Alguém foi mais rápido 😅 esse presente acabou de ser reservado. Que tal escolher outro?");
       } else if (res.error === "DADOS_INVALIDOS") {
         setErro("Confira o nome e o WhatsApp (com DDD).");
+      } else if (res.error === "MUITAS_TENTATIVAS") {
+        setErro("Muitas tentativas. Aguarde um minuto e tente novamente.");
       } else {
         setErro("Algo deu errado. Tente de novo em instantes.");
       }

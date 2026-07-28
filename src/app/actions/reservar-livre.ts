@@ -2,8 +2,10 @@
 
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabaseAdmin";
 import { signClaimAccess } from "@/lib/claim-access";
+import { consumeReservationRateLimit } from "@/lib/rate-limit";
 import {
   acharOuCriarConvidado,
   normalizeAmountCents,
@@ -27,6 +29,7 @@ export type ReserveLivreResult =
         | "VALOR_INVALIDO"
         | "PRESENTE_INDISPONIVEL"
         | "DADOS_INVALIDOS"
+        | "MUITAS_TENTATIVAS"
         | "ERRO";
     };
 
@@ -45,6 +48,9 @@ export async function reservarLivre(input: {
     return { ok: false, error: "DADOS_INVALIDOS" };
   }
   if (amount === null) return { ok: false, error: "VALOR_INVALIDO" };
+  if (!(await consumeReservationRateLimit(await headers()))) {
+    return { ok: false, error: "MUITAS_TENTATIVAS" };
+  }
 
   const admin = createAdminClient();
 

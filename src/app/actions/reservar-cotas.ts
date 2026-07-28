@@ -1,8 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabaseAdmin";
 import { signClaimAccess } from "@/lib/claim-access";
+import { consumeReservationRateLimit } from "@/lib/rate-limit";
 import {
   acharOuCriarConvidado,
   normalizeMessage,
@@ -26,6 +28,7 @@ export type ReserveCotasResult =
         | "COTAS_INSUFICIENTES"
         | "PRESENTE_INDISPONIVEL"
         | "DADOS_INVALIDOS"
+        | "MUITAS_TENTATIVAS"
         | "ERRO";
     };
 
@@ -42,6 +45,9 @@ export async function reservarCotas(input: {
   const shares = normalizeShareCount(input.shares);
   if (nome.length < 2 || nome.length > 120 || !phone || shares === null) {
     return { ok: false, error: "DADOS_INVALIDOS" };
+  }
+  if (!(await consumeReservationRateLimit(await headers()))) {
+    return { ok: false, error: "MUITAS_TENTATIVAS" };
   }
 
   const admin = createAdminClient();
