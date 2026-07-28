@@ -77,6 +77,10 @@ testável e polimento responsivo/acessível, revisados em celular e desktop.
 `#FBF7F0` + fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
 Casa do Lago, Rio das Ostras/RJ.
 
+**Navegação pública:** o menu principal rola para as seções `#nos`, `#presentes`,
+`#presenca` e `#recados` da home. Rotas separadas ficam reservadas aos fluxos
+completos e à área `/meus`.
+
 **Infra (links importantes):**
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
 - Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
@@ -118,7 +122,8 @@ vetorial inspirada no arco e no lago do local; `/nos` reúne celebração, data,
 endereço e rota do mapa sem inventar fatos pessoais. A contagem regressiva usa
 cálculo puro coberto por testes, os metadados seguem um template único e as rotas
 públicas foram auditadas em 390×844 e 1440×900. As fotos do catálogo continuam
-vindo do admin com `next/image`.
+vindo do admin com `next/image`. O menu editorial e os botões da capa rolam pela
+home; catálogo, RSVP, mural completo e `/meus` continuam em páginas próprias.
 
 **Padrão de reserva (LINK):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso

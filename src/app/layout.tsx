@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Link from "next/link";
+import { PRIMARY_NAV_ITEMS } from "@/lib/site-navigation";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -48,11 +49,11 @@ export default function RootLayout({
               C &amp; D
             </Link>
             <nav className="nav">
-              <Link href="/nos">Nós</Link>
-              <Link href="/presentes">Presentes</Link>
-              <Link href="/confirmar">Presença</Link>
-              <Link href="/recados">Recados</Link>
-              <Link href="/meus">Meus</Link>
+              {PRIMARY_NAV_ITEMS.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
             </nav>
           </div>
         </header>
