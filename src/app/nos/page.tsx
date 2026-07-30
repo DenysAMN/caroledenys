@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import CoupleStorySection from "@/components/CoupleStorySection";
 import LakeMark from "@/components/LakeMark";
 
 export const metadata: Metadata = {
@@ -32,28 +33,7 @@ export default function NosPage() {
         </div>
       </section>
 
-      <section className="nos-story">
-        <div className="container nos-story-grid">
-          <p className="nos-story-lead">
-            “Um domingo sem pressa, com abraços demorados e todas as nossas
-            pessoas preferidas no mesmo lugar.”
-          </p>
-          <div className="nos-story-copy">
-            <p>
-              Estamos preparando este casamento do jeito que mais importa para
-              a gente: cercados pelas pessoas que fazem parte da nossa vida. No
-              dia 31 de janeiro, queremos trocar a rotina por uma tarde inteira
-              de encontros, conversas e celebração.
-            </p>
-            <p>
-              Este site reúne o que você precisa para viver esse dia conosco.
-              Confirme sua presença quando puder e, se quiser nos presentear,
-              nossa lista foi pensada para ter escolhas simples e de todos os
-              tamanhos.
-            </p>
-          </div>
-        </div>
-      </section>
+      <CoupleStorySection />
 
       <section className="nos-service">
         <div className="container">

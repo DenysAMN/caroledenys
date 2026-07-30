@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
+import CoupleStorySection from "@/components/CoupleStorySection";
 import GiftCard from "@/components/GiftCard";
 import LakeMark from "@/components/LakeMark";
 import { getGifts } from "@/lib/gifts";
@@ -62,33 +63,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="nos" className="home-intro home-anchor-section">
-        <div className="container home-intro-grid">
-          <div className="home-intro-copy">
-            <p className="eyebrow">Nosso dia</p>
-            <h2>Um domingo para guardar.</h2>
-            <p>
-              Estamos preparando um encontro para celebrar o amor e reunir as
-              pessoas que fazem parte da nossa vida. A Casa do Lago abre as
-              portas, e a gente espera por você.
-            </p>
-            <Link href="#presenca" className="text-link">
-              Veja os detalhes do dia <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-          <aside className="home-date-card" aria-label="Data e local do casamento">
-            <time dateTime="2027-01-31T16:00:00-03:00">
-              <strong>31</strong>
-              <span>Janeiro</span>
-              <small>2027 · 16h</small>
-            </time>
-            <div>
-              <span>Casa do Lago</span>
-              <small>Rio das Ostras · RJ</small>
-            </div>
-          </aside>
-        </div>
-      </section>
+      <CoupleStorySection id="nos" />
 
       <section
         id="presentes"

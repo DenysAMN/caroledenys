@@ -125,6 +125,11 @@ públicas foram auditadas em 390×844 e 1440×900. As fotos do catálogo continu
 vindo do admin com `next/image`. O menu editorial e os botões da capa rolam pela
 home; catálogo, RSVP, mural completo e `/meus` continuam em páginas próprias.
 
+**História dos noivos:** `#nos` apresenta os relatos integrais de Carol e Denys
+como duas cartas conectadas pela cronologia de 06/09/2025, 07/10/2025 e
+31/01/2027. O conteúdo estruturado e o componente são compartilhados com `/nos`,
+sem abas, acordeões ou JavaScript cliente.
+
 **Padrão de reserva (LINK):** componente cliente
 (`LinkReserveButton`) fica SEMPRE montado e decide o estado local, para o sucesso
 sobreviver à revalidação. Server Action em `src/app/actions/`, admin client em
