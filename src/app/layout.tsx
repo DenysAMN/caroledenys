@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     template: "%s · Carol & Denys",
   },
   description:
-    "O casamento da Carol e do Denys na Casa do Lago, em Rio das Ostras. Lista de presentes e confirmação de presença.",
+    "O casamento da Carol e do Denys na Casa do Lago, em Rio das Ostras. Conheça nossa história, fotos e lista de presentes.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Carol & Denys",
     title: "Carol & Denys · 31.01.2027",
     description:
-      "Nosso casamento na Casa do Lago, em Rio das Ostras. Veja os detalhes, confirme sua presença e conheça nossa lista.",
+      "Nosso casamento na Casa do Lago, em Rio das Ostras. Veja os detalhes, nossas fotos e conheça a lista de presentes.",
   },
 };
 

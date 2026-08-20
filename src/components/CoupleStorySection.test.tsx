@@ -16,6 +16,8 @@ describe("CoupleStorySection", () => {
     expect(html).toContain("Hummm, bonita");
     expect(html).toContain("moooonte de amigos");
     expect(html).toContain("Para o homem que mudou a profecia");
+    expect(html).toContain("principal-3.jpg");
+    expect(html).toContain("Carol sorrindo para Denys durante o ensaio");
     expect(html.match(/<article/g)).toHaveLength(2);
     expect(html).not.toContain("<button");
   });

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   COUPLE_MILESTONES,
   COUPLE_STORIES,
@@ -28,6 +30,17 @@ export default function CoupleStorySection({
             versões de um encontro que mudou tudo.
           </p>
         </header>
+
+        <figure className="couple-story-photo">
+          <Image
+            src="/images/ensaio/principal-3.jpg"
+            alt="Carol sorrindo para Denys durante o ensaio"
+            width={1365}
+            height={2048}
+            sizes="(max-width: 700px) 92vw, 38vw"
+          />
+          <figcaption>Dois olhares. A mesma escolha.</figcaption>
+        </figure>
 
         <ol
           className="couple-timeline"

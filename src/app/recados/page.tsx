@@ -54,14 +54,14 @@ export default async function RecadosPage() {
             <span aria-hidden="true">“ ”</span>
             <h2>As primeiras páginas estão esperando.</h2>
             <p>
-              Os recados enviados com presentes e confirmações aparecerão aqui
-              depois de aprovados.
+              Os recados enviados com presentes aparecerão aqui depois de
+              aprovados.
             </p>
           </div>
         )}
 
         <div className="guestbook-foot">
-          <Link href="/confirmar" className="btn">Confirmar presença</Link>
+          <Link href="/" className="btn">Voltar ao início</Link>
           <Link href="/presentes" className="btn btn-ghost">Ver presentes</Link>
         </div>
       </div>

@@ -3,6 +3,11 @@
 > Documento de referência do projeto. Anexe no Claude Code no início de cada sessão.
 > O `CLAUDE.md` (arquivo separado, na raiz do repo) guarda o **estado atual**. Este aqui guarda o **plano**.
 
+> **Adendo de 20/08/2026:** a confirmação de presença migrou para outra
+> plataforma. A rota `/confirmar`, os CTAs e a seção pública de RSVP foram
+> removidos. Estrutura e dados históricos permanecem somente para consulta e
+> administração. Este adendo prevalece sobre referências antigas a RSVP abaixo.
+
 ---
 
 ## 0. Decisões travadas
@@ -10,12 +15,12 @@
 | # | Decisão | Escolha |
 |---|---|---|
 | 1 | Confirmação PIX | **Manual** (chave estática + comprovante + aprovação no painel). Arquitetura preparada para trocar por PSP depois. |
-| 2 | Identificação do convidado | **Sem login.** Nome + WhatsApp na hora de reservar. RSVP integrado, mas **nunca obrigatório antes do presente**. |
+| 2 | Identificação do convidado | **Sem login.** Nome + WhatsApp na hora de reservar presentes. RSVP público removido. |
 | 3 | Stack | Next.js 16 (App Router) + TypeScript + Tailwind + Supabase + Vercel |
 | 4 | Ferramenta de dev | **Claude Code** (computador pessoal, sem restrição de instalação) |
 | 5 | Prazo | ~6 meses, trabalhados em janelas entre embarques → sessões precisam ser retomáveis |
-| 6 | Escopo | Presentes (LINK / COTAS / LIVRE) + RSVP + Mural (versão barata) + Contagem regressiva + Páginas de conteúdo |
-| 7 | Mural | Exibe `claims.message` e observações de RSVP, **aprovados no painel**. Sem escrita pública anônima. |
+| 6 | Escopo | Presentes (LINK / COTAS / LIVRE) + Mural + Contagem regressiva + História + Ensaio + Páginas de conteúdo |
+| 7 | Mural | Exibe `claims.message` e registros históricos aprovados. Sem escrita pública anônima. |
 | 8 | Catálogo | ~22 presentes: ~14 LINK, ~6 COTAS, ~2 LIVRE |
 | 9 | Domínio | Subdomínio grátis da Vercel (`___.vercel.app`). Domínio próprio fica como opção futura. |
 
@@ -256,7 +261,7 @@ Abra o mesmo presente em **dois celulares** e clique em reservar no mesmo instan
 ```
 [/]  Home
      Nomes, data, foto, contagem regressiva
-     Botões: "Lista de presentes" | "Confirmar presença"
+     Botões: "Lista de presentes" | "Ver recados"
      ↓
 [/presentes]  Lista
      Filtros: Todos | Disponíveis | Categoria
@@ -295,11 +300,11 @@ Abra o mesmo presente em **dois celulares** e clique em reservar no mesmo instan
               • Upload do comprovante  → status EM_ANALISE
                       ▼
         [/obrigado]  "Recebemos! Vamos confirmar e te avisar ❤️"
-                     + "Já confirmou sua presença?" (link, NÃO obstáculo)
+                     + acesso aos recados e à lista de presentes
 
-[/confirmar]   RSVP — nome, WhatsApp, vou/não vou, acompanhantes, observações
+[/confirmar]   REMOVIDA — confirmação de presença acontece em outra plataforma
 [/meus]        lê guest_token do localStorage → mostra o que a pessoa reservou/pagou
-[/recados]     Mural: claims.message + guests.rsvp_notes, só os aprovados
+[/recados]     Mural: claims.message + registros históricos, só os aprovados
 [/nos]         História do casal / local / trajes  (estático, zero backend)
 ```
 

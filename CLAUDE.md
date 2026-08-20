@@ -27,7 +27,7 @@ mas **nunca fiz desenvolvimento web**. Não conheço as convenções do ecossist
 
 ## O projeto
 
-Site de lista de presentes + confirmação de presença para o meu casamento.
+Site de casamento com história, ensaio, lista de presentes e livro de recados.
 Especificação completa: **`ESPECIFICACAO.md`** (leia antes de codar qualquer coisa).
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind · Supabase (Postgres + Auth + Storage) · Vercel
@@ -53,7 +53,7 @@ Preparado para migrar pra PSP com webhook depois.
 7. **Nenhum telefone de convidado pode vazar** em API pública, no mural, em lugar nenhum.
 8. **Sem escrita pública anônima.** Mural só mostra o que foi aprovado no painel.
 9. **`timestamptz` (UTC) no banco.** Converte só na exibição.
-10. **RSVP nunca é pré-requisito pra dar presente.**
+10. **RSVP público foi aposentado.** Dados históricos e telas administrativas permanecem; não reexpor o formulário sem nova decisão explícita.
 
 ---
 
@@ -69,17 +69,18 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão concluída:** S8 — nova capa editorial, página `/nos`, contagem regressiva
-testável e polimento responsivo/acessível, revisados em celular e desktop.
+**Sessão em andamento:** integração das fotos do ensaio e referências visuais,
+com retirada completa do RSVP da experiência pública.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
-+ `Jost` (corpo). Paleta ancorada no **marsala** `#964F4C` (cor dos ternos) + marfim
-`#FBF7F0` + fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
++ `Jost` (corpo). Paleta refinada com granada `#7A1E33`, ameixa `#532337`,
+vinho `#5A1F30`, verde profundo `#435525`, oliva `#4F5A32`, marfim `#FBF7F0`
+e fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
 Casa do Lago, Rio das Ostras/RJ.
 
-**Navegação pública:** o menu principal rola para as seções `#nos`, `#presentes`,
-`#presenca` e `#recados` da home. Rotas separadas ficam reservadas aos fluxos
-completos e à área `/meus`.
+**Navegação pública:** o menu principal rola para as seções `#nos`, `#presentes`
+e `#recados` da home, além da área `/meus`. A rota `/confirmar` e todos os CTAs
+públicos de RSVP foram removidos; `/recados` permanece como mural completo.
 
 **Infra (links importantes):**
 - Repositório: https://github.com/DenysAMN/caroledenys (privado)
@@ -102,12 +103,16 @@ confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funçõe
 `confirm_payment` e `reject_payment` são atômicas e exclusivas da `service_role`;
 imagens do catálogo ficam no bucket público `gift-images` com limite de 4 MB.
 
-**S6 entregue:** `/confirmar` registra ou atualiza RSVP usando o token local;
+**S6 entregue (histórico):** `/confirmar` registrava ou atualizava RSVP usando o token local;
 `/meus` reconstrói o histórico e o acesso à tela PIX; `/recados` lê exclusivamente
 a view segura `public_messages`. O admin possui lista de convidados, métricas,
 exportação CSV e moderação sem apagar o texto original. O teste integrado
 `npm run test:s6-integration` prova que a anon key não lê `guests`/`claims` e que
 telefone e token não aparecem no mural.
+
+Em 20/08/2026, o formulário e a rota pública de RSVP foram aposentados porque a
+confirmação passou para outra plataforma. Dados antigos e administração foram
+preservados para não apagar histórico.
 
 **S7 entregue:** Supabase Cron executa `expire_stale_claims()` a cada 5 minutos;
 reservas LINK/COTAS/LIVRE compartilham limite de 5 tentativas por IP a cada 60
@@ -123,7 +128,7 @@ endereço e rota do mapa sem inventar fatos pessoais. A contagem regressiva usa
 cálculo puro coberto por testes, os metadados seguem um template único e as rotas
 públicas foram auditadas em 390×844 e 1440×900. As fotos do catálogo continuam
 vindo do admin com `next/image`. O menu editorial e os botões da capa rolam pela
-home; catálogo, RSVP, mural completo e `/meus` continuam em páginas próprias.
+home; catálogo, mural completo e `/meus` continuam em páginas próprias.
 
 **História dos noivos:** `#nos` apresenta os relatos integrais de Carol e Denys
 como duas cartas conectadas pela cronologia de 06/09/2025, 07/10/2025 e
@@ -151,8 +156,7 @@ sobreviver à revalidação. Server Action em `src/app/actions/`, admin client e
 
 **Pontos de atenção abertos:**
 - Testar reserva simultânea em 2 celulares antes de publicar para os convidados.
-- Adicionar as fotos reais do casal quando os arquivos originais forem entregues:
-  `public/images/carol-denys-hero.webp` e `public/images/carol-denys-nos.webp`.
+- Comprimir os originais do ensaio se a auditoria final de performance indicar necessidade.
 
 ---
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import CoupleStorySection from "@/components/CoupleStorySection";
-import LakeMark from "@/components/LakeMark";
 
 export const metadata: Metadata = {
   title: "Nós",
@@ -27,7 +27,13 @@ export default function NosPage() {
             </p>
           </div>
           <div className="nos-hero-art">
-            <LakeMark />
+            <Image
+              src="/images/ensaio/principal-1.jpg"
+              alt="Carol e Denys juntos durante o ensaio"
+              fill
+              priority
+              sizes="(max-width: 900px) 92vw, 46vw"
+            />
             <span>Rio das Ostras · verão de 2027</span>
           </div>
         </div>
@@ -81,11 +87,11 @@ export default function NosPage() {
             <p className="eyebrow">Antes do grande dia</p>
             <h2>Dois caminhos, no seu tempo.</h2>
           </div>
-          <Link href="/confirmar" className="nos-next-card">
+          <Link href="/recados" className="nos-next-card">
             <span>01</span>
             <div>
-              <h3>Confirme sua presença</h3>
-              <p>Leva menos de dois minutos e ajuda a preparar cada detalhe.</p>
+              <h3>Leia nossos recados</h3>
+              <p>Palavras carinhosas de quem já está celebrando com a gente.</p>
             </div>
             <i aria-hidden="true">→</i>
           </Link>

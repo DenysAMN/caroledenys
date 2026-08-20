@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
 import CoupleStorySection from "@/components/CoupleStorySection";
 import GiftCard from "@/components/GiftCard";
-import LakeMark from "@/components/LakeMark";
+import WeddingGallery from "@/components/WeddingGallery";
+import WeddingInspiration from "@/components/WeddingInspiration";
 import { getGifts } from "@/lib/gifts";
 import { getPublicMessages } from "@/lib/public-messages";
 
@@ -47,14 +49,21 @@ export default async function Home() {
               <Link href="#presentes" className="btn">
                 Lista de presentes
               </Link>
-              <Link href="#presenca" className="btn btn-ghost">
-                Confirmar presença
+              <Link href="#recados" className="btn btn-ghost">
+                Ver recados
               </Link>
             </div>
           </div>
           <div className="home-cover-art">
+            <Image
+              src="/images/ensaio/principal-1.jpg"
+              alt="Carol e Denys juntos no campo durante o ensaio"
+              fill
+              priority
+              sizes="(max-width: 900px) 92vw, 46vw"
+              className="home-cover-photo"
+            />
             <span className="home-cover-index">C · D</span>
-            <LakeMark />
             <div className="home-cover-caption">
               <span>Casa do Lago</span>
               <small>31.01.2027</small>
@@ -64,6 +73,8 @@ export default async function Home() {
       </section>
 
       <CoupleStorySection id="nos" />
+
+      <WeddingInspiration />
 
       <section
         id="presentes"
@@ -97,31 +108,33 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="presenca" className="home-rsvp home-anchor-section">
-        <div className="container home-rsvp-grid">
-          <div className="home-rsvp-copy">
-            <p className="eyebrow">Presença</p>
-            <h2>Esperamos você para celebrar com a gente.</h2>
-            <p>
-              A cerimônia começa às 16h, na Casa do Lago, em Costazul. Confirme
-              quem vai com você para prepararmos tudo com carinho.
-            </p>
-            <Link href="/confirmar" className="btn btn-light">
-              Confirmar presença
-            </Link>
+      <figure className="home-photo-break">
+        <Image
+          src="/images/ensaio/principal-2.jpg"
+          alt="Carol e Denys dançando juntos no campo"
+          width={1365}
+          height={2048}
+          sizes="100vw"
+        />
+        <figcaption>
+          <span>31 · 01 · 2027</span>
+          <strong>O nosso próximo passo.</strong>
+        </figcaption>
+      </figure>
+
+      <WeddingGallery />
+
+      <section className="home-event-note" aria-label="Informações da cerimônia">
+        <div className="container home-event-note-grid">
+          <p className="home-event-note-number">31</p>
+          <div>
+            <p className="eyebrow">O encontro</p>
+            <h2>Casa do Lago</h2>
           </div>
-          <aside className="home-rsvp-card" aria-label="Informações da cerimônia">
-            <p className="home-rsvp-number">31</p>
-            <p className="home-rsvp-month">Janeiro de 2027</p>
-            <div className="home-rsvp-rule" aria-hidden="true" />
-            <p>Domingo · 16h</p>
-            <strong>Casa do Lago</strong>
-            <address>
-              R. Beija-flor · Costazul
-              <br />
-              Rio das Ostras — RJ
-            </address>
-          </aside>
+          <address>
+            Domingo · 16h
+            <span>R. Beija-flor · Costazul · Rio das Ostras — RJ</span>
+          </address>
         </div>
       </section>
 

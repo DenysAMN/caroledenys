@@ -17,18 +17,13 @@ export default function ObrigadoPage() {
         </p>
 
         <div className="hero-cta" style={{ marginTop: 34 }}>
-          <Link href="/confirmar" className="btn">
-            Confirmar presença
+          <Link href="/recados" className="btn">
+            Ver recados
           </Link>
           <Link href="/presentes" className="btn btn-ghost">
             Voltar aos presentes
           </Link>
         </div>
-
-        <p className="note-soft" style={{ margin: "34px auto 0", textAlign: "left" }}>
-          A confirmação de presença é um convite, não uma obrigação para presentear.
-          Se ainda não souber se poderá ir, tudo bem deixar para depois.
-        </p>
       </div>
     </main>
   );
