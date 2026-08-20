@@ -153,7 +153,7 @@ Run: `npm test`, `npm run lint`, `npx tsc --noEmit`, `git diff --check` e `npm r
 
 Expected: todos com exit code 0.
 
-- [ ] **Step 4: Fazer QA visual e publicar**
+- [x] **Step 4: Fazer QA visual e publicar**
 
 Abrir a home em 1440×900 e 390×844, validar capa, história, inspiração, galeria,
 recados e ausência de links de RSVP. Depois, commitar, enviar `main`, aguardar a

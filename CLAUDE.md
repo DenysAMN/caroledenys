@@ -69,8 +69,9 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
-**Sessão em andamento:** integração das fotos do ensaio e referências visuais,
-com retirada completa do RSVP da experiência pública.
+**Sessão concluída:** fotos do ensaio e referências visuais integradas à home,
+paleta refinada e RSVP retirado completamente da experiência pública. Deploy
+validado em `https://caroledenys.vercel.app`.
 
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta refinada com granada `#7A1E33`, ameixa `#532337`,
@@ -96,7 +97,8 @@ públicos de RSVP foram removidos; `/recados` permanece como mural completo.
 - Identidade do Git configurada só neste repo (`--local`): Denys Augusto / denysaugusto2015@gmail.com
 
 **Próximo passo:** Sessão 9 — testes finais, concorrência em dois aparelhos,
-auditoria de performance e checklist para enviar o site aos convidados.
+auditoria de performance e checklist para enviar o site aos convidados. Fazer
+também a aprovação visual final das fotos em celulares reais.
 
 **S5 entregue:** `/admin` usa Supabase Auth SSR e permite conferir pagamentos,
 confirmar/rejeitar PIX, consultar métricas e administrar presentes. As funções
@@ -129,6 +131,13 @@ cálculo puro coberto por testes, os metadados seguem um template único e as ro
 públicas foram auditadas em 390×844 e 1440×900. As fotos do catálogo continuam
 vindo do admin com `next/image`. O menu editorial e os botões da capa rolam pela
 home; catálogo, mural completo e `/meus` continuam em páginas próprias.
+
+**Ensaio integrado:** `principal-1` abre a home, `principal-3` acompanha a
+história e `principal-2` cria a transição para a galeria. As dez fotos restantes
+formam `#galeria`; quatro referências aparecem identificadas como “Nossa
+inspiração”. A foto engraçada encerra o álbum com tratamento próprio. O build
+otimiza o carregamento por `next/image`, e as pastas originais permanecem fora
+do Git.
 
 **História dos noivos:** `#nos` apresenta os relatos integrais de Carol e Denys
 como duas cartas conectadas pela cronologia de 06/09/2025, 07/10/2025 e
