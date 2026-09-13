@@ -31,7 +31,7 @@ export default async function Home() {
         <div className="container home-cover-grid">
           <div className="home-cover-copy">
             <p className="eyebrow">Vamos casar</p>
-            <p className="home-overline">Domingo · 16h</p>
+            <p className="home-overline">Domingo · 15h30</p>
             <h1 className="home-names">
               <span>Carol</span>
               <i>&amp;</i>
@@ -132,7 +132,7 @@ export default async function Home() {
             <h2>Casa do Lago</h2>
           </div>
           <address>
-            Domingo · 16h
+            Domingo · 15h30
             <span>R. Beija-flor · Costazul · Rio das Ostras — RJ</span>
           </address>
         </div>

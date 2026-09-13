@@ -50,9 +50,9 @@ export default function NosPage() {
           <div className="nos-service-grid">
             <article>
               <span className="nos-service-label">Quando</span>
-              <time dateTime="2027-01-31T16:00:00-03:00">
+              <time dateTime="2027-01-31T15:30:00-03:00">
                 31 de janeiro de 2027
-                <small>Domingo · 16h</small>
+                <small>Domingo · 15h30</small>
               </time>
             </article>
             <article>

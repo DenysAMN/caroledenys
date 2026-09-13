@@ -76,7 +76,7 @@ validado em `https://caroledenys.vercel.app`.
 **Visual travado:** Direção A — editorial romântico. Fontes `Cormorant Garamond` (display)
 + `Jost` (corpo). Paleta refinada com granada `#7A1E33`, ameixa `#532337`,
 vinho `#5A1F30`, verde profundo `#435525`, oliva `#4F5A32`, marfim `#FBF7F0`
-e fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 16h**,
+e fios dourados. Tokens em `src/app/globals.css`. Casamento: **31/01/2027, 15h30**,
 Casa do Lago, Rio das Ostras/RJ.
 
 **Navegação pública:** o menu principal rola para as seções `#nos`, `#presentes`

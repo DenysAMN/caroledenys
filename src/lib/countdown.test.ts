@@ -2,6 +2,15 @@ import { describe, expect, it } from "vitest";
 import { getCountdownParts, WEDDING_AT } from "./countdown";
 
 describe("getCountdownParts", () => {
+  it("counts down to the ceremony at 15:30 in Rio das Ostras", () => {
+    expect(getCountdownParts(new Date("2027-01-31T15:29:00-03:00").getTime())).toEqual({
+      days: 0,
+      hours: 0,
+      minutes: 1,
+      seconds: 0,
+    });
+  });
+
   it("decomposes the remaining time into calendar display units", () => {
     const remaining = (1 * 86_400 + 2 * 3_600 + 3 * 60 + 4) * 1_000;
 

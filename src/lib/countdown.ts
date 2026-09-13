@@ -1,4 +1,4 @@
-export const WEDDING_AT = new Date("2027-01-31T16:00:00-03:00").getTime();
+export const WEDDING_AT = new Date("2027-01-31T15:30:00-03:00").getTime();
 
 export type CountdownParts = {
   days: number;
