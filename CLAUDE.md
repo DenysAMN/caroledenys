@@ -83,8 +83,15 @@ Casa do Lago, Rio das Ostras/RJ.
 e `#recados` da home, além da área `/meus`. A rota `/confirmar` e todos os CTAs
 públicos de RSVP foram removidos; `/recados` permanece como mural completo.
 
+**Continuidade online:** preparação em `docs/CLOUD_HANDOFF.md`. A tarefa
+ChatGPT criada com um resumo não substitui um ambiente Codex Cloud configurado.
+A migração ainda depende de autenticar/configurar esse ambiente e verificar
+checkout, testes e publicação nele. Não afirmar que as credenciais locais
+foram transferidas. `AGENTS.md` aponta para os documentos de continuidade.
+
 **Infra (links importantes):**
-- Repositório: https://github.com/DenysAMN/caroledenys (privado)
+- Repositório: https://github.com/DenysAMN/caroledenys (público em 27/09/2026;
+  o usuário tornou público para contornar uma falha de leitura no conector)
 - Site no ar: https://caroledenys.vercel.app (deploy automático a cada push na branch `main`)
 - Supabase: projeto `caroledenys`, ref `fmkgkpsxzmgnhnsnspdp`, região São Paulo. Migração em `supabase/migrations/`.
 - **Env vars** (em `.env.local`, gitignored):
