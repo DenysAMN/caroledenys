@@ -12,18 +12,22 @@ Produção: https://caroledenys.vercel.app/
 Branch de produção: `main`, com publicação automática pela Vercel.
 Última alteração funcional nesta preparação: `7664a58`, horário para 15h30.
 
-O conector GitHub retornava 404 quando o repositório era privado. A leitura foi
-confirmada após ele ser tornado público. A causa do acesso privado não está
-comprovada. Ler um repositório público e receber metadados de permissão `push`
-não comprova que o ambiente de trabalho consegue publicar alterações.
-Não recomendar novamente tornar o repositório público como configuração.
+O conector GitHub retornava 404 quando o repositório era privado. Após a
+instalação/autorização concluída pelo usuário em 27/09/2026, a busca de
+repositórios instalados passou a retornar `DenysAMN/caroledenys`, confirmado
+nesta tarefa. A antiga lista vazia não descreve mais a conexão atual.
+O repositório continua público nesta verificação; o acesso a ESTE repositório
+privado ainda precisa ser comprovado. Não recomendar torná-lo público nem
+repetir reconexões sem evidência. A escrita concreta está registrada abaixo.
 
-## Configurar o ambiente correto
+## Ambiente desta tarefa e opção Codex Cloud
 
-Em https://chatgpt.com/codex/settings/environments, criar ou selecionar um
-ambiente Codex Cloud ligado a `DenysAMN/caroledenys`. A conexão do plugin GitHub
-de uma conversa e o checkout autenticado do ambiente devem ser verificados
-separadamente. Não criar outra conversa genérica para simular essa configuração.
+Esta tarefa já executa código em Cloud Work, sem depender do computador local.
+Isso não cria um ambiente Codex Cloud com ENV_ID. Se esse ambiente específico
+for desejado, sua configuração é separada em
+https://chatgpt.com/codex/settings/environments. A leitura pelo Git e a escrita
+autenticada pelo plugin são verificações distintas; não presumir credenciais
+Git locais a partir do funcionamento do plugin.
 
 Usar Node.js 22 e o lockfile versionado. Script de instalação:
 
@@ -71,10 +75,10 @@ produção como parte da migração.
 ## Critérios para considerar a migração concluída
 
 - [ ] A tarefa roda em um ambiente Codex Cloud associado ao repositório.
-- [ ] O checkout e a branch selecionada foram conferidos.
-- [ ] Dependências instaladas; testes, lint e build executados na nuvem.
+- [x] O checkout de main em `cc65563` e a branch remota `codex/cloud-validation` foram conferidos.
+- [x] Dependências instaladas; testes, lint e build executados nesta tarefa Cloud Work.
 - [ ] A leitura autenticada do repositório privado foi validada, se privado.
-- [ ] O envio de uma alteração de documentação em branch própria ou PR foi
+- [x] O envio de uma alteração de documentação em branch própria ou PR foi
       comprovado; acesso público de leitura não satisfaz este item.
 - [ ] As variáveis públicas foram configuradas para visualizar o catálogo.
 - [ ] O fluxo de publicação foi confirmado no painel/commit de deploy da Vercel
@@ -84,6 +88,68 @@ produção como parte da migração.
 Itens não verificados devem permanecer abertos; não afirmar “100% migrado”.
 Mudanças futuras podem usar branch e PR, com merge em `main` para produção.
 Não fazer mudanças fictícias no site apenas para testar publicação.
+
+
+## Validação executada nesta tarefa Cloud Work — 27/09/2026
+
+Validação feita no ambiente online desta conversa, sem usar o computador local.
+Não foi criado ENV_ID nem transferido automaticamente o histórico da tarefa
+local. Foram lidos no GitHub AGENTS.md, CLAUDE.md, ESPECIFICACAO.md e este documento.
+
+### Código e comandos
+
+- Checkout atualizado de `origin/main`: `cc65563c33d3e9deb230bd7fd5aa6d34a6f770b1`.
+- Diretório de execução: `/workspace/scratch/aaa887a7ab05/caroledenys`.
+- O runtime padrão tinha Node 24; os comandos abaixo usaram Node **22.23.3**
+  e npm **10.9.9**, selecionados por
+  `npx --yes --package=node@22 --package=npm@10 -c '<comando>'`.
+- `npm ci`: sucesso, código de saída 0, 444 pacotes instalados.
+- `npm test`: sucesso, código de saída 0, **81 testes em 17 arquivos**.
+- `npm run lint`: sucesso, código de saída 0, sem diagnósticos do ESLint.
+- `npm run build`: sucesso, código de saída 0, Next.js 16.2.12/Turbopack,
+  TypeScript concluído e 11 páginas estáticas geradas.
+- Houve avisos do ambiente sobre `http-proxy` e `EnvHttpProxyAgent`
+  experimental; não impediram os comandos.
+- O código e o lockfile permaneceram sem alterações após a execução.
+
+### Escrita autenticada
+
+A integração GitHub criou a branch `codex/cloud-validation` a partir do SHA
+acima. A publicação desta seção nessa branch registra uma alteração real de
+documentação pelo conector, sem depender apenas de `permissions.push=true`.
+Somente `docs/CLOUD_HANDOFF.md` deve mudar; o PR deve ter base `main` e
+permanecer aberto, sem merge. O Git de leitura usou o repositório público;
+push autenticado por linha de comando não foi testado.
+
+Escrita confirmada no commit `feaa71f729c9977e24781c4b4bd0eb632ad491a3`.
+PR criado e aberto, sem merge: https://github.com/DenysAMN/caroledenys/pull/1.
+A resposta da criação confirmou 1 arquivo alterado.
+
+### Limites e pendências
+
+Nenhuma das sete variáveis listadas em `.env.example` estava configurada no
+processo e não havia `.env.local`. Portanto, **o build utilizou catálogo e
+recados vazios**, conforme o retorno de listas vazias em `gifts.ts` e
+`public-messages.ts` quando o Supabase não está configurado.
+Esse sucesso não valida banco, autenticação administrativa, reservas, PIX,
+comprovantes, RLS ou pagamentos.
+
+Não foram executados `test:s5-integration`, `test:s6-integration` ou
+`test:s7-integration`, nem realizadas escritas no banco de produção.
+Nenhum segredo foi solicitado ou copiado. Acesso privado a este repositório,
+configuração de credenciais, deploy de produção e migração integral do
+histórico continuam sem validação nesta tarefa. Não foi feito merge.
+Um eventual preview automático da Vercel não equivale a validar produção.
+
+### Continuação no celular
+
+Abrir esta mesma conversa/tarefa na mesma conta e projeto Casamento pelo
+celular e enviar a próxima customização. O trabalho aqui usa o ambiente online
+e a integração GitHub, sem exigir o computador local ligado. A retomada efetiva
+no celular ainda deve ser confirmada pelo usuário. O checkout temporário pode
+precisar ser reconstruído; a documentação e os commits no GitHub são a
+referência persistente. Nenhuma ferramenta específica para anexar PR à tarefa
+foi exposta nesta sessão; o link do PR será entregue na conversa.
 
 ## Decisões que a continuação deve preservar
 
@@ -111,5 +177,6 @@ as perguntas que realmente impedem a execução.
 - https://learn.chatgpt.com/docs/environments/cloud-environment
 - https://learn.chatgpt.com/docs/remote-connections
 
-Handoff direto de um chat local para Codex Cloud não é suportado. A continuidade
-usa uma nova tarefa no ambiente correto e os documentos do projeto.
+Não houve handoff automático local → Codex Cloud. A continuidade desta tarefa
+Cloud Work usa os documentos versionados e o contexto fornecido pelo usuário;
+um ambiente Codex Cloud separado continua não criado.
