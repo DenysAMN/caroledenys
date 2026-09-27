@@ -1097,3 +1097,13 @@ body:has(.admin-root) { background: #f4efe6; }
   .admin-message-index { position: absolute; top: 10px; right: 0; }
   .admin-message-decision { margin-top: 18px; }
 }
+
+/* Mapa compartilhado pela home e pela página do casal. */
+.venue-map { margin-top: 36px; }
+.venue-map iframe {
+  display: block; width: 100%; height: clamp(260px, 45vw, 380px);
+  border: 1px solid rgba(251,247,240,.3); border-radius: 4px;
+  background: var(--ivory);
+}
+.venue-map .nos-map-link { margin-top: 20px; gap: 12px; text-align: center; }
+.home-event-note address { font-size: 14px; line-height: 1.6; }

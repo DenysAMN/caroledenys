@@ -69,6 +69,15 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 27/09/2026 — localização:** endereço detalhado na home e em
+`/nos`: Rua Beija-flor, Bairro Costazul, Rio das Ostras — RJ, CEP 28895-048.
+Mapa Google incorporado com carregamento tardio e botão “Como chegar” que abre
+rotas no Google Maps. A capa também tem atalho para `#local`. Não foi inventado
+número de imóvel nem coordenadas: mapa e rota usam o nome e endereço fornecidos.
+Validação desta mudança: testes, lint e build no ambiente online; sem variáveis
+do Supabase, catálogo e recados ficam vazios nesse build. Produção deve ser
+verificada após publicar o commit; banco e pagamentos não foram testados.
+
 **Sessão concluída:** fotos do ensaio e referências visuais integradas à home,
 paleta refinada e RSVP retirado completamente da experiência pública. Deploy
 validado em `https://caroledenys.vercel.app`.
