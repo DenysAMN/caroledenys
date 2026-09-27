@@ -78,7 +78,7 @@ produção como parte da migração.
 - [x] O checkout de main em `cc65563` e a branch remota `codex/cloud-validation` foram conferidos.
 - [x] Dependências instaladas; testes, lint e build executados nesta tarefa Cloud Work.
 - [ ] A leitura autenticada do repositório privado foi validada, se privado.
-- [ ] O envio de uma alteração de documentação em branch própria ou PR foi
+- [x] O envio de uma alteração de documentação em branch própria ou PR foi
       comprovado; acesso público de leitura não satisfaz este item.
 - [ ] As variáveis públicas foram configuradas para visualizar o catálogo.
 - [ ] O fluxo de publicação foi confirmado no painel/commit de deploy da Vercel
@@ -120,6 +120,10 @@ documentação pelo conector, sem depender apenas de `permissions.push=true`.
 Somente `docs/CLOUD_HANDOFF.md` deve mudar; o PR deve ter base `main` e
 permanecer aberto, sem merge. O Git de leitura usou o repositório público;
 push autenticado por linha de comando não foi testado.
+
+Escrita confirmada no commit `feaa71f729c9977e24781c4b4bd0eb632ad491a3`.
+PR criado e aberto, sem merge: https://github.com/DenysAMN/caroledenys/pull/1.
+A resposta da criação confirmou 1 arquivo alterado.
 
 ### Limites e pendências
 
