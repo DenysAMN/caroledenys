@@ -22,6 +22,7 @@ export type ReserveLivreResult =
       claimId: string;
       guestToken: string | null;
       claimAccessToken: string;
+      couplePhone: string | null;
     }
   | {
       ok: false;
@@ -97,6 +98,7 @@ export async function reservarLivre(input: {
     ok: true,
     claimId: claim.id,
     guestToken: guest.token,
+    couplePhone: normalizePhone(process.env.RESERVATION_NOTIFY_PHONE ?? ""),
     claimAccessToken: signClaimAccess(claim.id, guest.id),
   };
 }

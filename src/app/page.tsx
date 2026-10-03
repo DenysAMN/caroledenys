@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import DressCode from "@/components/DressCode";
 import VenueMap from "@/components/VenueMap";
 import Countdown from "@/components/Countdown";
 import CoupleStorySection from "@/components/CoupleStorySection";
@@ -52,6 +53,9 @@ export default async function Home() {
               </Link>
               <Link href="#local" className="btn btn-ghost">
                 Como chegar
+              </Link>
+              <Link href="#dress-code" className="btn btn-ghost">
+                Dress code
               </Link>
               <Link href="#recados" className="btn btn-ghost">
                 Ver recados
@@ -145,6 +149,8 @@ export default async function Home() {
           <VenueMap />
         </div>
       </section>
+
+      <DressCode />
 
       <section id="recados" className="home-messages home-anchor-section">
         <div className="container">

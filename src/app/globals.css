@@ -1107,3 +1107,17 @@ body:has(.admin-root) { background: #f4efe6; }
 }
 .venue-map .nos-map-link { margin-top: 20px; gap: 12px; text-align: center; }
 .home-event-note address { font-size: 14px; line-height: 1.6; }
+
+.dress-code { background: var(--paper); text-align: center; }
+.dress-code .container { max-width: 760px; }
+.dress-code h2 { margin: 12px 0 24px; font-size: clamp(38px, 7vw, 58px); }
+.dress-code p:not(.eyebrow) { margin-top: 14px; line-height: 1.8; }
+.reservation-privacy { font-size: 13px; color: var(--muted); margin: 12px 0; }
+.reservation-whatsapp { margin: 20px 0; padding: 18px 0; border-top: 1px solid var(--sand); }
+.reservation-whatsapp p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+.reservation-whatsapp-actions { display: grid; gap: 10px; }
+.reservation-whatsapp-actions .btn { text-align: center; white-space: normal; }
+.admin-reservations { margin-bottom: 30px; }
+.admin-reservations article { padding: 18px 0; border-bottom: 1px solid var(--sand); }
+.admin-reservations p { margin: 6px 0; overflow-wrap: anywhere; }
+.admin-gift-name small { overflow-wrap: anywhere; }

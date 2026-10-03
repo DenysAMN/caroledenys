@@ -6,11 +6,20 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 // WhatsApp livre -> E.164 (+55...). Aceita "(22) 99999-9999", "22999999999" etc.
 export function normalizePhone(raw: string): string | null {
   const digits = (raw || "").replace(/\D/g, "");
-  if (digits.length < 10 || digits.length > 13) return null;
-  const withCountry =
-    digits.startsWith("55") && digits.length >= 12 ? digits : `55${digits}`;
-  if (withCountry.length < 12 || withCountry.length > 13) return null;
-  return `+${withCountry}`;
+  const national = digits.startsWith("55") && digits.length >= 12
+    ? digits.slice(2)
+    : digits;
+  const areaCodes = new Set([
+    "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "24",
+    "27", "28", "31", "32", "33", "34", "35", "37", "38", "41", "42", "43",
+    "44", "45", "46", "47", "48", "49", "51", "53", "54", "55", "61", "62",
+    "63", "64", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77",
+    "79", "81", "82", "83", "84", "85", "86", "87", "88", "89", "91", "92",
+    "93", "94", "95", "96", "97", "98", "99",
+  ]);
+  if (!areaCodes.has(national.slice(0, 2))) return null;
+  if (!/^(?:\d{2}9\d{8}|\d{2}[2-5]\d{7})$/.test(national)) return null;
+  return `+55${national}`;
 }
 
 export function normalizeMessage(raw?: string): string | null {

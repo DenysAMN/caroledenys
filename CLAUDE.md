@@ -69,6 +69,24 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 03/10/2026 — traje e reservas:** dress code na home e em `/nos`,
+com branco/off-white/creme/marsala vedados aos convidados e orientação para evitar
+ternos pretos. Nome e telefone continuam obrigatórios nos três fluxos; validação
+brasileira de telefone reforçada. Painel de presentes mostra quem reservou, e o
+detalhe traz nome, telefone e status atrás de `requireAdmin`. Nenhuma identidade
+de reserva foi adicionada ao catálogo público.
+Após reservar, os convidados podem guardar uma mensagem no próprio WhatsApp ou
+avisar Denys quando `RESERVATION_NOTIFY_PHONE` estiver configurada no servidor.
+O número não fica no código público. Essa variável ainda não foi configurada
+nesta tarefa; o botão para os noivos só aparece quando ela existe. São mensagens preparadas, com envio manual no
+WhatsApp, nunca envio automático. PIX continua pendente até conferência manual;
+links não levam tokens e o envio de comprovante requer o navegador original.
+Não há integração WhatsApp Business/SMS configurada; automação continua pendente
+de provedor e credenciais em ambiente seguro. Não pedir segredos no chat.
+Validação: 90 testes, lint e TypeScript; build local bloqueado por acesso a Google
+Fonts. Validar preview Vercel antes do merge. Não executar testes no banco de
+produção. O usuário autorizou publicar as mudanças solicitadas sem nova pergunta.
+
 **Atualização de 27/09/2026 — localização:** endereço detalhado na home e em
 `/nos`: Rua Beija-flor, Bairro Costazul, Rio das Ostras — RJ, CEP 28895-048.
 Mapa Google incorporado com carregamento tardio e botão “Como chegar” que abre
