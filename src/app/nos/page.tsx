@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import VenueMap from "@/components/VenueMap";
 import CoupleStorySection from "@/components/CoupleStorySection";
 
 export const metadata: Metadata = {
@@ -8,9 +9,6 @@ export const metadata: Metadata = {
   description:
     "Conheça a celebração de Carol e Denys e veja os detalhes da Casa do Lago.",
 };
-
-const MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=Casa+do+Lago+R.+Beija-flor+Costazul+Rio+das+Ostras+RJ+28895-048";
 
 export default function NosPage() {
   return (
@@ -65,19 +63,12 @@ export default function NosPage() {
             <article>
               <span className="nos-service-label">Endereço</span>
               <address>
-                R. Beija-flor · Costazul
-                <small>Rio das Ostras — RJ · 28895-048</small>
+                Rua Beija-flor · Bairro Costazul
+                <small>Rio das Ostras — RJ · CEP 28895-048</small>
               </address>
             </article>
           </div>
-          <a
-            className="btn nos-map-link"
-            href={MAP_URL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Abrir rota no mapa
-          </a>
+          <VenueMap />
         </div>
       </section>
 

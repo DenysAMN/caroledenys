@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import VenueMap from "@/components/VenueMap";
 import Countdown from "@/components/Countdown";
 import CoupleStorySection from "@/components/CoupleStorySection";
 import GiftCard from "@/components/GiftCard";
@@ -48,6 +49,9 @@ export default async function Home() {
             <div className="home-actions">
               <Link href="#presentes" className="btn">
                 Lista de presentes
+              </Link>
+              <Link href="#local" className="btn btn-ghost">
+                Como chegar
               </Link>
               <Link href="#recados" className="btn btn-ghost">
                 Ver recados
@@ -124,7 +128,7 @@ export default async function Home() {
 
       <WeddingGallery />
 
-      <section className="home-event-note" aria-label="Informações da cerimônia">
+      <section id="local" className="home-event-note home-anchor-section" aria-label="Informações da cerimônia">
         <div className="container home-event-note-grid">
           <p className="home-event-note-number">31</p>
           <div>
@@ -133,8 +137,12 @@ export default async function Home() {
           </div>
           <address>
             Domingo · 15h30
-            <span>R. Beija-flor · Costazul · Rio das Ostras — RJ</span>
+            <span>Rua Beija-flor · Bairro Costazul</span>
+            <span>Rio das Ostras — RJ · CEP 28895-048</span>
           </address>
+        </div>
+        <div className="container">
+          <VenueMap />
         </div>
       </section>
 
