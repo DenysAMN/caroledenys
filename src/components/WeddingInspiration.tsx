@@ -4,7 +4,7 @@ import { WEDDING_INSPIRATION } from "../content/wedding-photos";
 
 export default function WeddingInspiration() {
   return (
-    <section className="wedding-inspiration" aria-labelledby="wedding-inspiration-title">
+    <section id="inspiracao" className="wedding-inspiration home-anchor-section" aria-labelledby="wedding-inspiration-title">
       <div className="container wedding-inspiration-grid">
         <header className="wedding-inspiration-copy">
           <p className="eyebrow">Cores e atmosfera</p>

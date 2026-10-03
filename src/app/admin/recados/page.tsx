@@ -1,3 +1,6 @@
+import Link from "next/link";
+import AdminManagementNotice from "@/components/AdminManagementNotice";
+import { adminManagementReady } from "@/lib/admin-management";
 import AdminMessageActions from "@/components/AdminMessageActions";
 import { getAdminMessages } from "@/lib/admin-messages";
 
@@ -9,9 +12,14 @@ const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
   year: "numeric",
 });
 
-export default async function AdminMessagesPage() {
-  const messages = await getAdminMessages();
-  const pending = messages.filter((message) => !message.approved).length;
+export default async function AdminMessagesPage({ searchParams }: { searchParams: Promise<{ q?: string; status?: string; source?: string }> }) {
+  const [allMessages, ready, params] = await Promise.all([getAdminMessages(), adminManagementReady(), searchParams]);
+  const q = typeof params.q === "string" ? params.q.slice(0, 200) : "";
+  const status = params.status === "PUBLISHED" || params.status === "HIDDEN" ? params.status : "ALL";
+  const source = params.source === "CLAIM" || params.source === "RSVP" ? params.source : "ALL";
+  const messages = allMessages.filter(row => (!q || `${row.name} ${row.context} ${row.message}`.toLocaleLowerCase("pt-BR").includes(q.toLocaleLowerCase("pt-BR")))
+    && (status === "ALL" || (status === "PUBLISHED" ? row.approved : !row.approved)) && (source === "ALL" || row.source === source));
+  const pending = allMessages.filter((message) => !message.approved).length;
 
   return (
     <main className="admin-page">
@@ -23,6 +31,8 @@ export default async function AdminMessagesPage() {
         <p>Leia antes de publicar. Ocultar retira do mural sem apagar o texto.</p>
       </header>
 
+      {!ready && <AdminManagementNotice />}
+
       <section className="admin-metrics admin-message-metrics" aria-label="Resumo">
         <article>
           <span>Aguardando leitura</span>
@@ -30,13 +40,21 @@ export default async function AdminMessagesPage() {
         </article>
         <article>
           <span>Publicados</span>
-          <strong>{messages.length - pending}</strong>
+          <strong>{allMessages.length - pending}</strong>
         </article>
         <article>
           <span>Total recebido</span>
-          <strong>{messages.length}</strong>
+          <strong>{allMessages.length}</strong>
         </article>
       </section>
+
+      <form className="admin-filters" method="get">
+        <label>Buscar nome ou texto<input name="q" defaultValue={q} maxLength={200} /></label>
+        <label>Estado<select name="status" defaultValue={status}><option value="ALL">Todos</option><option value="PUBLISHED">Publicados</option><option value="HIDDEN">Pendentes ou ocultos</option></select></label>
+        <label>Origem<select name="source" defaultValue={source}><option value="ALL">Todas</option><option value="CLAIM">Presente</option><option value="RSVP">RSVP histórico</option></select></label>
+        <button className="btn">Filtrar</button><Link href="/admin/recados" className="text-link">Limpar filtros</Link>
+      </form>
+      <p className="admin-results">{messages.length} recado(s) nesta seleção.</p>
 
       {messages.length > 0 ? (
         <section className="admin-message-list" aria-label="Recados recebidos">
@@ -66,6 +84,8 @@ export default async function AdminMessagesPage() {
                   id={message.id}
                   source={message.source}
                   approved={message.approved}
+                  originalText={message.message}
+                  editingEnabled={ready}
                 />
               </div>
             </article>
@@ -74,8 +94,8 @@ export default async function AdminMessagesPage() {
       ) : (
         <div className="admin-empty">
           <span>00</span>
-          <h2>Nenhum recado recebido</h2>
-          <p>Quando alguém escrever, o texto aparecerá aqui para sua leitura.</p>
+          <h2>Nenhum recado encontrado</h2>
+          <p>Tente outros filtros. Novos recados aparecem aqui para sua leitura.</p>
         </div>
       )}
     </main>

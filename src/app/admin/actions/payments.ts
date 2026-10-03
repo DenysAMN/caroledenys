@@ -26,6 +26,12 @@ export async function confirmarPagamento(
   if (error) return { ok: false, message: paymentActionError(error.message) };
 
   revalidatePath("/admin");
+  revalidatePath("/admin/reservas");
+  revalidatePath("/admin/presentes/[id]", "page");
+  revalidatePath("/presentes/[id]", "page");
+  revalidatePath("/pagamento/[claimId]", "page");
+  revalidatePath("/");
+  revalidatePath("/presentes");
   return { ok: true, message: "Pagamento confirmado." };
 }
 
@@ -52,6 +58,11 @@ export async function rejeitarPagamento(
   }
 
   revalidatePath("/admin");
+  revalidatePath("/admin/reservas");
+  revalidatePath("/admin/presentes/[id]", "page");
+  revalidatePath("/presentes/[id]", "page");
+  revalidatePath("/pagamento/[claimId]", "page");
+  revalidatePath("/");
   revalidatePath("/presentes");
   return { ok: true, message: "Contribuição cancelada." };
 }

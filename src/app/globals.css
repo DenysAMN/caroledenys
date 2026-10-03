@@ -1136,3 +1136,34 @@ body:has(.admin-root) { background: #f4efe6; }
 .admin-reservations article { padding: 18px 0; border-bottom: 1px solid var(--sand); }
 .admin-reservations p { margin: 6px 0; overflow-wrap: anywhere; }
 .admin-gift-name small { overflow-wrap: anywhere; }
+
+/* Navegação horizontal com todas as seções, sem comprimir os links no celular. */
+.site-header .container { gap: 20px; }
+.site-header .nav { overflow-x: auto; padding-block: 10px; flex: 1; justify-content: flex-end; }
+.site-header .nav a { flex-shrink: 0; white-space: nowrap; }
+.admin-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; margin: 24px 0; }
+.admin-filters label { display: grid; gap: 8px; flex: 1 1 180px; font-size: 13px; }
+.admin-filters input, .admin-filters select, .admin-inline-form textarea { width: 100%; padding: 12px; border: 1px solid var(--sand-2); border-radius: 4px; background: var(--paper); color: var(--ink); font: inherit; }
+.admin-inline-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.admin-inline-actions .btn { padding: 10px 14px; white-space: normal; }
+.admin-inline-form { margin: 18px 0; display: grid; gap: 12px; width: 100%; }
+.admin-inline-form textarea { resize: vertical; min-height: 80px; }
+.admin-inline-form p, .admin-results { font-size: 14px; line-height: 1.7; }
+.admin-management-notice { margin: 24px 0; padding: 22px; border: 1px solid var(--sand-2); background: var(--ivory); }
+.admin-management-notice h2 { font-size: 26px; }
+.admin-management-notice p { margin-top: 10px; line-height: 1.7; }
+.admin-management-notice a, .admin-results a { text-decoration: underline; }
+.admin-reservation-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: start; }
+.admin-reservation-actions { margin-top: 16px; }
+.admin-message { grid-template-columns: 38px minmax(0, 1fr) minmax(240px, .55fr); }
+.admin-history-text { white-space: pre-wrap; overflow-wrap: anywhere; padding: 16px; background: var(--ivory); }
+@media (max-width: 1000px) {
+  .site-header .nav { justify-content: flex-start; }
+  .admin-message { grid-template-columns: 28px minmax(0, 1fr); }
+  .admin-message-decision { grid-column: 2; }
+}
+@media (max-width: 700px) {
+  .admin-message { display: block; }
+  .admin-filters label { flex-basis: 100%; }
+  .admin-inline-actions .btn { flex: 1 1 130px; }
+}
