@@ -84,6 +84,8 @@ export default async function Home() {
 
       <WeddingInspiration />
 
+      <DressCode />
+
       <section
         id="presentes"
         className="section home-gifts home-anchor-section"
@@ -116,22 +118,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <figure className="home-photo-break">
-        <Image
-          src="/images/ensaio/principal-2.jpg"
-          alt="Carol e Denys dançando juntos no campo"
-          width={1365}
-          height={2048}
-          sizes="100vw"
-        />
-        <figcaption>
-          <span>31 · 01 · 2027</span>
-          <strong>O nosso próximo passo.</strong>
-        </figcaption>
-      </figure>
-
-      <WeddingGallery />
-
       <section id="local" className="home-event-note home-anchor-section" aria-label="Informações da cerimônia">
         <div className="container home-event-note-grid">
           <p className="home-event-note-number">31</p>
@@ -149,8 +135,6 @@ export default async function Home() {
           <VenueMap />
         </div>
       </section>
-
-      <DressCode />
 
       <section id="recados" className="home-messages home-anchor-section">
         <div className="container">
@@ -195,6 +179,22 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <figure className="home-photo-break">
+        <Image
+          src="/images/ensaio/principal-2.jpg"
+          alt="Carol e Denys dançando juntos no campo"
+          width={1365}
+          height={2048}
+          sizes="100vw"
+        />
+        <figcaption>
+          <span>31 · 01 · 2027</span>
+          <strong>O nosso próximo passo.</strong>
+        </figcaption>
+      </figure>
+
+      <WeddingGallery />
+
     </main>
   );
 }

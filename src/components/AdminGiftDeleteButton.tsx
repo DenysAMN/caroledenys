@@ -16,7 +16,7 @@ export default function AdminGiftDeleteButton({ giftId }: { giftId: string }) {
         className="admin-text-danger"
         disabled={pending}
         onClick={() => {
-          if (!window.confirm("Excluir este presente e todas as reservas ligadas a ele?")) return;
+          if (!window.confirm("Excluir este presente sem reservas? Esta ação não pode ser desfeita.")) return;
           startTransition(async () => {
             const result = await excluirPresente(giftId);
             if (!result.ok) setError(result.message);

@@ -69,6 +69,33 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 03/10/2026 — ordem da home e painel ampliado:** capa seguida por
+Nós → Nossa inspiração → Dress code → Presentes → Localização → Recados → Fotos.
+Menu com essas âncoras e rolagem horizontal no celular; acesso a `/meus` mantido.
+PR #4 (ilustrações de dress code) integrado após autorização expressa do usuário.
+Admin: nova área `/admin/reservas` com busca, filtros, contato WhatsApp,
+exportação CSV protegida e acesso ao histórico; recados com busca/filtros.
+Migração `20261003000000_admin_management.sql` cria operações atômicas para
+cancelar reservas não pagas e devolver cotas/liberar LINK, confirmar/desfazer
+recebimento de LINK, editar recados com controle de conflito e preservar a
+versão anterior. Motivos, autor e alterações ficam em `admin_activity`, privada
+com RLS e RPCs exclusivas de `service_role`. PIX pago não pode ser cancelado por
+essa função. Presente com histórico não pode ser excluído (guardas no app/banco).
+**Ativação pendente:** esta tarefa não tem conexão/credencial administrativa
+Supabase nem ferramenta para aplicar a migração. Não foi aplicada na produção.
+O painel detecta a função de disponibilidade; antes da migração mostra aviso e
+mantém desativados os botões que dependem dela. Busca, filtros, exportação,
+aprovação/ocultação de recados permanecem disponíveis. Executar o arquivo inteiro
+uma única vez no SQL Editor do projeto e atualizar o painel. Não pedir segredos.
+Validação: `npm ci --ignore-scripts`, 105 testes (incluindo dez cenários em
+PostgreSQL isolado/PGlite), lint, TypeScript e build aprovados neste ambiente.
+Não foram executados testes no Supabase de produção nem ações sobre reservas reais.
+A ordem foi conferida no HTML gerado. Verificação visual automatizada não
+concluída: o navegador de teste não iniciou neste runtime.
+Build sem variáveis públicas Supabase: catálogo/recados vazios neste ambiente;
+pagamentos e sessão autenticada de produção não foram validados.
+
+
 **Atualização de 03/10/2026 — referências de dress code:** duas ilustrações
 originais em aquarela, com vestidos verde/azul/terracota e ternos azul/cinza
 médio/verde, integradas ao componente compartilhado pela home e `/nos`.

@@ -140,6 +140,9 @@ export async function excluirPresente(giftId: string) {
   if (!UUID_PATTERN.test(giftId)) return { ok: false, message: "Presente inválido." };
 
   const admin = createAdminClient();
+  const { count, error: countError } = await admin.from("claims").select("id", { count: "exact", head: true }).eq("gift_id", giftId);
+  if (countError) return { ok: false, message: "Não foi possível conferir as reservas deste presente." };
+  if (count !== 0) return { ok: false, message: "Este presente tem reservas no histórico. Use Oculto para retirá-lo do site." };
   const { data: current } = await admin
     .from("gifts")
     .select("image_url")
