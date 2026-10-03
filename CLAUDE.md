@@ -69,6 +69,19 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 03/10/2026 — referências de dress code:** duas ilustrações
+originais em aquarela, com vestidos verde/azul/terracota e ternos azul/cinza
+médio/verde, integradas ao componente compartilhado pela home e `/nos`.
+Cartões responsivos, legendas, texto alternativo e WebP com `next/image`.
+Avisos de branco/off-white/creme/marsala e ternos pretos preservados; exemplos
+não impõem modelos ou comprimentos. Assets em `public/images/dress-code/`.
+O usuário informou ter configurado `RESERVATION_NOTIFY_PHONE`; o valor não foi
+consultado nem exposto nesta sessão. O envio pelo WhatsApp permanece manual.
+Verificações neste ambiente online: 90 testes, lint, TypeScript e build
+aprovados. Sem variáveis públicas do Supabase neste build, catálogo e recados
+ficam vazios; banco e pagamentos não foram validados. Conferir deploy Vercel.
+
+
 **Atualização de 03/10/2026 — traje e reservas:** dress code na home e em `/nos`,
 com branco/off-white/creme/marsala vedados aos convidados e orientação para evitar
 ternos pretos. Nome e telefone continuam obrigatórios nos três fluxos; validação
@@ -77,8 +90,8 @@ detalhe traz nome, telefone e status atrás de `requireAdmin`. Nenhuma identidad
 de reserva foi adicionada ao catálogo público.
 Após reservar, os convidados podem guardar uma mensagem no próprio WhatsApp ou
 avisar Denys quando `RESERVATION_NOTIFY_PHONE` estiver configurada no servidor.
-O número não fica no código público. Essa variável ainda não foi configurada
-nesta tarefa; o botão para os noivos só aparece quando ela existe. São mensagens preparadas, com envio manual no
+O número não fica no código público. O usuário informou a configuração
+dessa variável na Vercel; o botão para os noivos só aparece quando ela existe. São mensagens preparadas, com envio manual no
 WhatsApp, nunca envio automático. PIX continua pendente até conferência manual;
 links não levam tokens e o envio de comprovante requer o navegador original.
 Não há integração WhatsApp Business/SMS configurada; automação continua pendente
