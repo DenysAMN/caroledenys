@@ -1139,7 +1139,7 @@ body:has(.admin-root) { background: #f4efe6; }
 
 /* Navegação horizontal com todas as seções, sem comprimir os links no celular. */
 .site-header .container { gap: 20px; }
-.site-header .nav { overflow-x: auto; padding-block: 10px; flex: 1; justify-content: flex-end; }
+.site-header .nav { overflow-x: auto; padding-block: 10px; flex: 1; justify-content: flex-start; }
 .site-header .nav a { flex-shrink: 0; white-space: nowrap; }
 .admin-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; margin: 24px 0; }
 .admin-filters label { display: grid; gap: 8px; flex: 1 1 180px; font-size: 13px; }
