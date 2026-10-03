@@ -13,7 +13,7 @@ import {
 // Fluxo LINK: acha-ou-cria convidado + reserve_link (atômico). Só servidor.
 
 export type ReserveResult =
-  | { ok: true; token: string | null }
+  | { ok: true; token: string | null; couplePhone: string | null }
   | {
       ok: false;
       error:
@@ -65,5 +65,5 @@ export async function reservarLink(input: {
   revalidatePath(`/presentes/${input.giftId}`);
   revalidatePath("/presentes");
   revalidatePath("/");
-  return { ok: true, token: guest.token };
+  return { ok: true, token: guest.token, couplePhone: normalizePhone(process.env.RESERVATION_NOTIFY_PHONE ?? "") };
 }

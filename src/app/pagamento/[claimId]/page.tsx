@@ -29,7 +29,7 @@ export default async function PagamentoPage({
       <StatusScreen
         eyebrow="Recebido"
         title="Estamos conferindo ❤️"
-        text="Recebemos seu comprovante. Vamos confirmar e te avisar pelo WhatsApp."
+        text="Recebemos seu comprovante. Os noivos vão conferir o PIX; acompanhe a confirmação por este link."
       />
     );
   }

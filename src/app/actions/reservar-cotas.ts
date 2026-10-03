@@ -21,6 +21,8 @@ export type ReserveCotasResult =
       claimId: string;
       guestToken: string | null;
       claimAccessToken: string;
+      couplePhone: string | null;
+      expiresAt: string | null;
     }
   | {
       ok: false;
@@ -103,7 +105,9 @@ export async function reservarCotas(input: {
   return {
     ok: true,
     claimId,
+    expiresAt: (data as { expires_at?: string }).expires_at ?? null,
     guestToken: guest.token,
+    couplePhone: normalizePhone(process.env.RESERVATION_NOTIFY_PHONE ?? ""),
     claimAccessToken: signClaimAccess(claimId, guest.id),
   };
 }

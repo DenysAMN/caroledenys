@@ -27,7 +27,7 @@ export default async function AdminGiftsPage() {
             <div className="admin-gift-miniature">
               {gift.image_url ? <Image src={gift.image_url} alt="" fill sizes="76px" /> : <span>C&amp;D</span>}
             </div>
-            <div className="admin-gift-name"><small>{gift.type} · {gift.category || "Sem categoria"}</small><strong>{gift.title}</strong></div>
+            <div className="admin-gift-name"><small>{gift.type} · {gift.category || "Sem categoria"}</small><strong>{gift.title}</strong>{gift.reservedBy.length > 0 && <small>Reservado por: {gift.reservedBy.join(", ")}</small>}</div>
             <span className={`admin-status admin-status-${gift.status.toLowerCase()}`}>{gift.status}</span>
             <span className="admin-gift-price">{price(gift)}</span>
             <span className="admin-gift-edit">Editar →</span>

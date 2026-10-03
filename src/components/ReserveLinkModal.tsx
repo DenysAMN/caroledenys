@@ -1,5 +1,6 @@
 "use client";
 
+import ReservationWhatsApp from "@/components/ReservationWhatsApp";
 import { useState, useTransition } from "react";
 import { reservarLink, type ReserveResult } from "@/app/actions/reservar-link";
 import { getGuestToken, saveGuestToken } from "@/lib/guest-storage";
@@ -23,6 +24,7 @@ export default function ReserveLinkModal({
   const [whatsapp, setWhatsapp] = useState("");
   const [recado, setRecado] = useState("");
   const [erro, setErro] = useState<string | null>(null);
+  const [couplePhone, setCouplePhone] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
 
@@ -43,6 +45,7 @@ export default function ReserveLinkModal({
       });
       if (res.ok) {
         if (res.token) saveGuestToken(res.token);
+        setCouplePhone(res.couplePhone);
         setDone(true);
         onSuccess();
       } else if (res.error === "JA_RESERVADO") {
@@ -78,6 +81,7 @@ export default function ReserveLinkModal({
               Anotamos que <strong>{giftTitle}</strong> é presente seu. Agora é só
               comprar quando puder.
             </p>
+            <ReservationWhatsApp name={nome.trim()} phone={whatsapp} couplePhone={couplePhone} giftTitle={giftTitle} giftId={giftId} />
             <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
               {externalUrl && (
                 <a href={externalUrl} target="_blank" rel="noopener noreferrer" className="btn">
@@ -99,26 +103,28 @@ export default function ReserveLinkModal({
             </p>
 
             <label className="field">
-              <span>Seu nome</span>
+              <span>Seu nome (obrigatório)</span>
               <input
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                placeholder="Maria Silva"
+                placeholder="Maria Silva" autoComplete="name" minLength={2} maxLength={120}
                 required
               />
             </label>
 
             <label className="field">
-              <span>WhatsApp (com DDD)</span>
+              <span>WhatsApp com DDD (obrigatório)</span>
               <input
                 value={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.value)}
                 placeholder="(22) 99999-9999"
+                type="tel" autoComplete="tel" maxLength={22}
                 inputMode="tel"
                 required
               />
             </label>
 
+            <p className="reservation-privacy">Nome e telefone são usados pelos noivos para identificar sua reserva e entrar em contato. Seu telefone não aparece na lista pública.</p>
             <label className="field">
               <span>Recadinho (opcional)</span>
               <textarea

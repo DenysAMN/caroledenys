@@ -1,5 +1,6 @@
 "use client";
 
+import ReservationWhatsApp from "@/components/ReservationWhatsApp";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { reservarCotas } from "@/app/actions/reservar-cotas";
@@ -49,6 +50,7 @@ export default function ReservePixModal({
   onClose,
 }: Props) {
   const router = useRouter();
+  const [confirmation, setConfirmation] = useState<{ claimId: string; expiresAt?: string | null; couplePhone: string | null } | null>(null);
   const [nome, setNome] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [recado, setRecado] = useState("");
@@ -86,7 +88,7 @@ export default function ReservePixModal({
       if (res.ok) {
         if (res.guestToken) saveGuestToken(res.guestToken);
         saveClaimAccessToken(res.claimId, res.claimAccessToken);
-        router.push(`/pagamento/${res.claimId}`);
+        setConfirmation({ claimId: res.claimId, couplePhone: res.couplePhone, expiresAt: "expiresAt" in res && typeof res.expiresAt === "string" ? res.expiresAt : null });
       } else {
         setErro(mensagemErro(res.error));
       }
@@ -105,7 +107,16 @@ export default function ReservePixModal({
         >
           ×
         </button>
-        <form onSubmit={submit}>
+        {confirmation ? (
+          <div>
+            <p className="eyebrow">Reserva registrada</p>
+            <h3>{giftTitle}</h3>
+            <p>Falta pagar o PIX de {formatBRL(amountCents)}. A reserva não confirma o pagamento.</p>
+            {kind === "COTAS" && <p>As cotas ficam reservadas por 60 minutos a partir da reserva. Pague e envie o comprovante dentro desse prazo.</p>}
+            <button className="btn" onClick={() => router.push(`/pagamento/${confirmation.claimId}`)}>Continuar para o PIX</button>
+            <ReservationWhatsApp name={nome.trim()} phone={whatsapp} couplePhone={confirmation.couplePhone} giftTitle={giftTitle} giftId={giftId} claimId={confirmation.claimId} expiresAt={confirmation.expiresAt} />
+          </div>
+        ) : <form onSubmit={submit}>
           <p className="eyebrow">Presentear por PIX</p>
           <h3 style={{ fontSize: 26, margin: "8px 0 2px" }}>{giftTitle}</h3>
           <p style={{ color: "var(--marsala-deep)", fontFamily: "var(--font-display)", fontSize: 26 }}>
@@ -117,19 +128,21 @@ export default function ReservePixModal({
           </p>
 
           <label className="field">
-            <span>Seu nome</span>
-            <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Maria Silva" required />
+            <span>Seu nome (obrigatório)</span>
+            <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Maria Silva" autoComplete="name" minLength={2} maxLength={120} required />
           </label>
           <label className="field">
-            <span>WhatsApp (com DDD)</span>
+            <span>WhatsApp com DDD (obrigatório)</span>
             <input
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
               placeholder="(22) 99999-9999"
-              inputMode="tel"
+              type="tel" autoComplete="tel" maxLength={22}
+                inputMode="tel"
               required
             />
           </label>
+          <p className="reservation-privacy">Nome e telefone são usados pelos noivos para identificar sua reserva e entrar em contato. Seu telefone não aparece na lista pública.</p>
           <label className="field">
             <span>Recadinho (opcional)</span>
             <textarea
@@ -145,7 +158,7 @@ export default function ReservePixModal({
           <button type="submit" className="btn" disabled={pending} style={{ width: "100%", marginTop: 8 }}>
             {pending ? "Reservando…" : "Ir para o pagamento"}
           </button>
-        </form>
+        </form>}
       </div>
     </div>
   );

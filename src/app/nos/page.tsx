@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import DressCode from "@/components/DressCode";
 import VenueMap from "@/components/VenueMap";
 import CoupleStorySection from "@/components/CoupleStorySection";
 
@@ -71,6 +72,8 @@ export default function NosPage() {
           <VenueMap />
         </div>
       </section>
+
+      <DressCode />
 
       <section className="nos-next">
         <div className="container nos-next-grid">
