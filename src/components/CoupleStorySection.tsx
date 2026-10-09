@@ -1,3 +1,4 @@
+import type { WeddingPhoto } from "../content/wedding-photos";
 import Image from "next/image";
 
 import {
@@ -7,11 +8,14 @@ import {
 
 type CoupleStorySectionProps = {
   id?: string;
+  photo?: (WeddingPhoto & { caption?: string }) | null;
 };
 
 export default function CoupleStorySection({
   id,
+  photo,
 }: CoupleStorySectionProps) {
+  const storyPhoto = photo === undefined ? { src: "/images/ensaio/principal-3.jpg", alt: "Carol sorrindo para Denys durante o ensaio", width: 1365, height: 2048 } : photo;
   return (
     <section
       id={id}
@@ -31,16 +35,16 @@ export default function CoupleStorySection({
           </p>
         </header>
 
-        <figure className="couple-story-photo">
+        {storyPhoto && <figure className="couple-story-photo">
           <Image
-            src="/images/ensaio/principal-3.jpg"
-            alt="Carol sorrindo para Denys durante o ensaio"
-            width={1365}
-            height={2048}
+            src={storyPhoto.src}
+            alt={storyPhoto.alt}
+            width={storyPhoto.width}
+            height={storyPhoto.height}
             sizes="(max-width: 700px) 92vw, 38vw"
           />
-          <figcaption>Dois olhares. A mesma escolha.</figcaption>
-        </figure>
+          <figcaption>{photo?.caption || "Dois olhares. A mesma escolha."}</figcaption>
+        </figure>}
 
         <ol
           className="couple-timeline"

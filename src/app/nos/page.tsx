@@ -1,3 +1,6 @@
+import LakeMark from "@/components/LakeMark";
+import { getPublicGallery } from "@/lib/gallery";
+import { gallerySelection } from "@/lib/gallery-rules";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +14,10 @@ export const metadata: Metadata = {
     "Conheça a celebração de Carol e Denys e veja os detalhes da Casa do Lago.",
 };
 
-export default function NosPage() {
+export const revalidate = 30;
+
+export default async function NosPage() {
+  const photos = gallerySelection(await getPublicGallery());
   return (
     <main className="nos-page">
       <section className="nos-hero">
@@ -26,19 +32,19 @@ export default function NosPage() {
             </p>
           </div>
           <div className="nos-hero-art">
-            <Image
-              src="/images/ensaio/principal-1.jpg"
-              alt="Carol e Denys juntos durante o ensaio"
+            {photos.cover ? <Image
+              src={photos.cover.src}
+              alt={photos.cover.alt}
               fill
               priority
               sizes="(max-width: 900px) 92vw, 46vw"
-            />
-            <span>Rio das Ostras · verão de 2027</span>
+            /> : <LakeMark />}
+            <span>{photos.cover?.caption || "Rio das Ostras · verão de 2027"}</span>
           </div>
         </div>
       </section>
 
-      <CoupleStorySection />
+      <CoupleStorySection photo={photos.story} />
 
       <section className="nos-service">
         <div className="container">

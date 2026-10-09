@@ -1,3 +1,6 @@
+import LakeMark from "@/components/LakeMark";
+import { getPublicGallery } from "@/lib/gallery";
+import { gallerySelection } from "@/lib/gallery-rules";
 import Image from "next/image";
 import Link from "next/link";
 import DressCode from "@/components/DressCode";
@@ -20,10 +23,12 @@ const messageDateFormatter = new Intl.DateTimeFormat("pt-BR", {
 });
 
 export default async function Home() {
-  const [gifts, messages] = await Promise.all([
+  const [gifts, messages, photoSnapshot] = await Promise.all([
     getGifts(),
     getPublicMessages(),
+    getPublicGallery(),
   ]);
+  const photos = gallerySelection(photoSnapshot);
   const preview = gifts.slice(0, 3);
   const messagePreview = messages.slice(0, 2);
 
@@ -63,26 +68,26 @@ export default async function Home() {
             </div>
           </div>
           <div className="home-cover-art">
-            <Image
-              src="/images/ensaio/principal-1.jpg"
-              alt="Carol e Denys juntos no campo durante o ensaio"
+            {photos.cover ? <Image
+              src={photos.cover.src}
+              alt={photos.cover.alt}
               fill
               priority
               sizes="(max-width: 900px) 92vw, 46vw"
               className="home-cover-photo"
-            />
+            /> : <LakeMark />}
             <span className="home-cover-index">C · D</span>
             <div className="home-cover-caption">
-              <span>Casa do Lago</span>
+              <span>{photos.cover?.caption || "Casa do Lago"}</span>
               <small>31.01.2027</small>
             </div>
           </div>
         </div>
       </section>
 
-      <CoupleStorySection id="nos" />
+      <CoupleStorySection id="nos" photo={photos.story} />
 
-      <WeddingInspiration />
+      <WeddingInspiration photos={photos.inspiration} />
 
       <DressCode />
 
@@ -179,21 +184,21 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <figure className="home-photo-break">
+      {photos.transition && <figure className="home-photo-break">
         <Image
-          src="/images/ensaio/principal-2.jpg"
-          alt="Carol e Denys dançando juntos no campo"
-          width={1365}
-          height={2048}
+          src={photos.transition.src}
+          alt={photos.transition.alt}
+          width={photos.transition.width}
+          height={photos.transition.height}
           sizes="100vw"
         />
         <figcaption>
           <span>31 · 01 · 2027</span>
-          <strong>O nosso próximo passo.</strong>
+          <strong>{photos.transition.caption || "O nosso próximo passo."}</strong>
         </figcaption>
-      </figure>
+      </figure>}
 
-      <WeddingGallery />
+      <WeddingGallery photos={photos.home} total={photos.gallery.length} showFullLink />
 
     </main>
   );
