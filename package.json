@@ -13,6 +13,9 @@
     "test:s7-integration": "node --env-file=.env.local scripts/s7-integration.mjs"
   },
   "dependencies": {
+    "@dnd-kit/core": "6.3.1",
+    "@dnd-kit/sortable": "10.0.0",
+    "@dnd-kit/utilities": "3.2.2",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.3",
     "next": "16.2.12",

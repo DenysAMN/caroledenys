@@ -1178,6 +1178,41 @@ body:has(.admin-root) { background: #f4efe6; }
 .admin-gallery-card h2 { font-size: 26px; }
 .admin-gallery-card p { margin: 12px 0; line-height: 1.6; }
 .admin-gallery-edit { margin-top: 20px; }
+.admin-photo-board { margin: 24px 0; }
+.admin-photo-board > p { line-height: 1.65; margin: 12px 0; }
+.admin-photo-tip { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.admin-photo-destinations { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin: 20px 0; }
+.admin-photo-destination { border: 2px dashed var(--sand-2); border-radius: 8px; background: var(--ivory); transition: border-color .15s, background .15s; }
+.admin-photo-destination.is-over { border-color: var(--wine); background: var(--sand); }
+.admin-photo-destination button { display: flex; align-items: center; gap: 10px; padding: 10px; width: 100%; min-height: 90px; text-align: left; cursor: pointer; }
+.admin-photo-destination img, .admin-photo-empty { width: 46px; height: 60px; object-fit: contain; flex-shrink: 0; }
+.admin-photo-empty { display: grid; place-items: center; font-size: 28px; }
+.admin-photo-destination strong { display: block; font-size: 12px; line-height: 1.4; }
+.admin-photo-destination small { display: block; font-size: 11px; line-height: 1.6; margin-top: 4px; }
+.admin-photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; margin: 18px 0; }
+.admin-photo-tile { min-width: 0; border: 2px solid var(--sand-2); border-radius: 8px; overflow: hidden; background: var(--paper); }
+.admin-photo-tile.is-selected { border-color: var(--wine); }
+.admin-photo-tile.is-dragging { opacity: .3; }
+.admin-photo-tile.is-hidden .admin-photo-drag img { opacity: .5; }
+.admin-photo-drag { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; cursor: grab; touch-action: none; background: var(--ivory); }
+.admin-photo-drag:active { cursor: grabbing; }
+.admin-photo-drag img { width: 100%; height: 100%; object-fit: contain; user-select: none; }
+.admin-photo-grip, .admin-photo-number { position: absolute; bottom: 6px; padding: 2px 7px; background: rgba(255,255,255,.92); border-radius: 5px; font-size: 15px; }
+.admin-photo-grip { right: 6px; }
+.admin-photo-number { left: 6px; font-size: 12px; }
+.admin-photo-badge { display: block; font-size: 10px; padding: 6px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-photo-badge.is-home { background: var(--wine); color: white; }
+.admin-photo-select { display: block; width: 100%; padding: 12px 6px; min-height: 44px; font-size: 12px; text-decoration: underline; cursor: pointer; }
+.admin-photo-overlay { width: 140px; height: 110px; padding: 5px; background: var(--paper); border: 2px solid var(--wine); border-radius: 8px; box-shadow: 0 12px 30px #0003; }
+.admin-photo-overlay img { width: 100%; height: 100%; object-fit: contain; }
+.admin-photo-board button:focus-visible, .admin-gallery-add summary:focus-visible { outline: 3px solid var(--wine); outline-offset: -3px; }
+.admin-photo-board button:disabled { cursor: default; }
+.admin-gallery-add { margin-top: 24px; }
+.admin-gallery-add summary { cursor: pointer; font-size: 22px; padding-bottom: 12px; }
+@media (max-width: 600px) {
+ .admin-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+ .admin-photo-destinations { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .admin-gallery-edit summary { cursor: pointer; text-decoration: underline; line-height: 1.7; }
 .gallery-page-head { padding-top: 42px; }
 .gallery-page-head h1 { margin: 18px 0; font-size: clamp(40px,8vw,64px); }

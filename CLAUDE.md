@@ -69,6 +69,24 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 09/10/2026 — organização visual das fotos:** painel de
+`/admin/galeria` com mosaico de miniaturas, arraste para reordenar e cinco áreas
+para soltar e mudar o destino (capa, história, transição, inspiração e galeria).
+Miniaturas mostram a foto inteira e selo das primeiras fotos que vão à home.
+Mouse, toque e teclado para ordenar; formulário mantém escolha do destino.
+Cada movimento salva automaticamente pelas ações autenticadas existentes;
+revisão do banco continua protegendo contra conflitos. Ordem otimista volta
+à anterior se o servidor rejeitar. Filtro por espaço permanece após salvar,
+outros espaços mantêm sua ordem quando um grupo é reordenado. Edição abre só
+a foto escolhida; envio de novas fotos fica recolhido. Não adiciona migração:
+depende apenas da estrutura da galeria já preparada na sessão anterior.
+Validação nesta tarefa: 121 testes, lint, TypeScript e build aprovados.
+Navegador automatizado indisponível (download do Chromium truncado); arraste
+real em sessão administrativa/celular não foi verificado aqui. Sem credenciais
+Supabase no runtime: build com catálogo/recados vazios e fotos legadas; nenhum
+teste de integração executado em produção. Publicação autorizada pelo usuário.
+
+
 **Atualização de 09/10/2026 — galeria administrável:** `/admin/galeria` permite
 upload em lote (até 20 fotos por envio), substituição de arquivos, descrição,
 legenda, publicação/ocultação, exclusão e ordem por botões Subir/Descer. Destinos:
