@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteGalleryPhoto, reorderGalleryPhotos, saveGalleryPhoto, setGalleryHomeLimit, type GalleryResult } from "@/app/admin/actions/gallery";
 import { GALLERY_PLACEMENTS, PLACEMENT_LABELS, type GalleryPhoto, type GallerySnapshot } from "@/lib/gallery-rules";
+import AdminGalleryBoard from "./AdminGalleryBoard";
 import { compressGalleryUpload } from "@/lib/gallery-upload";
 
 function PhotoFields({ photo }: { photo?: GalleryPhoto }) {
@@ -21,14 +22,37 @@ export default function AdminGalleryManager({ snapshot }: { snapshot: GallerySna
   const [pending, startTransition] = useTransition();
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [placementFilter, setPlacementFilter] = useState("ALL");
+  const editorRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (selectedId) {
+      editorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      editorRef.current?.focus({ preventScroll: true });
+    }
+  }, [selectedId]);
   const photos = [...snapshot.photos].sort((a,b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id));
-  const displayed = photos.filter(photo => placementFilter === "ALL" || photo.placement === placementFilter);
+  const selected = photos.find(photo => photo.id === selectedId);
   const disabled = pending || !snapshot.ready;
   function run(task: () => Promise<GalleryResult>) {
     startTransition(async () => {
       try { const result = await task(); setMessage(result.message); if (result.ok) router.refresh(); }
       catch { setMessage("Não foi possível concluir. Atualize a página e tente novamente."); }
+    });
+  }
+  function persist(task: () => Promise<GalleryResult>): Promise<boolean> {
+    return new Promise(resolve => {
+      startTransition(async () => {
+        try {
+          const result = await task();
+          setMessage(result.message);
+          if (result.ok) router.refresh();
+          resolve(result.ok);
+        } catch {
+          setMessage("Não foi possível salvar a posição. A ordem anterior foi mantida.");
+          resolve(false);
+        }
+      });
     });
   }
   return <>
@@ -43,8 +67,16 @@ export default function AdminGalleryManager({ snapshot }: { snapshot: GallerySna
         <Link className="text-link" href="/galeria" target="_blank">Ver galeria completa ↗</Link>
       </form>
     </section>
-    <section className="admin-form-sheet">
-      <h2>Adicionar fotos</h2>
+    <div className="admin-gallery-feedback" aria-live="polite">{progress || message}</div>
+    <AdminGalleryBoard key={snapshot.revision} photos={photos} homeLimit={snapshot.homeLimit} disabled={disabled} selectedId={selectedId} onSelect={setSelectedId} filter={placementFilter} onFilter={setPlacementFilter}
+      onReorder={ids => persist(() => reorderGalleryPhotos(ids, snapshot.revision))}
+      onPlacement={(photo, placement) => {
+        const form = new FormData(); form.set("alt", photo.alt); form.set("caption", photo.caption); form.set("placement", placement);
+        if (photo.published) form.set("published", "on");
+        return persist(() => saveGalleryPhoto(photo.id, form, snapshot.revision));
+      }} />
+    <details className="admin-form-sheet admin-gallery-add">
+      <summary>Adicionar novas fotos</summary>
       <form className="admin-gallery-upload" onSubmit={event => {
         event.preventDefault(); const formElement = event.currentTarget; const fields = new FormData(formElement);
         const files = fields.getAll("images").filter((value): value is File => value instanceof File && value.size > 0);
@@ -74,30 +106,23 @@ export default function AdminGalleryManager({ snapshot }: { snapshot: GallerySna
         <label className="field"><span>Escolher fotos do celular ou computador</span><input name="images" type="file" multiple accept="image/jpeg,image/png,image/webp" required disabled={disabled} /><small>Até 20 fotos por envio · JPG, PNG ou WebP de até 20 MB cada. A compressão acontece antes do envio. Para HEIC, exporte como JPG.</small></label>
         <button className="btn" disabled={disabled}>{pending ? "Processando…" : "Enviar fotos"}</button>
       </form>
-    </section>
-    <div className="admin-gallery-feedback" aria-live="polite">{progress || message}</div>
-    <div className="admin-filters"><label>Mostrar fotos de<select value={placementFilter} onChange={event => setPlacementFilter(event.target.value)} disabled={pending}><option value="ALL">Todos os espaços</option>{GALLERY_PLACEMENTS.map(value => <option key={value} value={value}>{PLACEMENT_LABELS[value]}</option>)}</select></label><p>{photos.length} foto(s) cadastrada(s)</p></div>
-    <p>Use “Subir” e “Descer” para mudar a ordem dentro do espaço selecionado. Ao escolher outra foto de capa, história ou transição, a anterior volta para a galeria.</p>
-    <section className="admin-gallery-list" aria-label="Fotos cadastradas">
-      {displayed.map((photo,index) => <article className="admin-gallery-card" key={`${photo.id}-${snapshot.revision}`}>
+    </details>
+    <section ref={editorRef} tabIndex={-1} className="admin-gallery-list" aria-label="Editar foto selecionada">
+      {selected ? [selected].map(photo => <article className="admin-gallery-card" key={`${photo.id}-${snapshot.revision}`}>
         <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width:700px) 100vw, 220px" className="admin-gallery-thumb" />
         <div><h2>{photo.alt}</h2><p>{PLACEMENT_LABELS[photo.placement]} · {photo.published ? "Publicada" : "Oculta"}</p>{photo.caption && <p>{photo.caption}</p>}
           <div className="admin-inline-actions">
-            {[-1,1].map(direction => <button className="btn btn-ghost" type="button" key={direction} disabled={disabled || !displayed[index+direction]} onClick={() => {
-              const ids=photos.map(value=>value.id); const target=displayed[index+direction]; const from=ids.indexOf(photo.id);const to=ids.indexOf(target.id); [ids[from],ids[to]]=[ids[to],ids[from]];run(()=>reorderGalleryPhotos(ids,snapshot.revision));
-            }}>{direction<0 ? "↑ Subir" : "↓ Descer"}</button>)}
             <button className="btn btn-ghost" type="button" disabled={disabled} onClick={() => { const form = new FormData();form.set("alt",photo.alt);form.set("caption",photo.caption);form.set("placement",photo.placement);if(!photo.published)form.set("published","on");run(()=>saveGalleryPhoto(photo.id,form,snapshot.revision)); }}>{photo.published ? "Ocultar" : "Publicar"}</button>
             <button className="btn admin-btn-danger" type="button" disabled={disabled} onClick={() => { if(window.confirm("Excluir esta foto do site? Se ela estiver em um destaque, esse espaço ficará sem foto até você escolher outra."))run(()=>deleteGalleryPhoto(photo.id,snapshot.revision)); }}>Excluir</button>
           </div>
-          <details className="admin-gallery-edit"><summary>Editar descrição, legenda, local ou substituir foto</summary>
+          <div className="admin-gallery-edit">
             <form onSubmit={event => {
               event.preventDefault();const form=new FormData(event.currentTarget);
               run(async()=>{const file=form.get("image");if(file instanceof File && file.size>0)form.set("image",await compressGalleryUpload(file));return saveGalleryPhoto(photo.id,form,snapshot.revision);});
             }}><PhotoFields photo={photo} /><label className="field"><span>Substituir por outra foto (opcional)</span><input name="image" type="file" accept="image/jpeg,image/png,image/webp" disabled={disabled} /></label><button className="btn" disabled={disabled}>Salvar foto</button></form>
-          </details>
+          </div>
         </div>
-      </article>)}
-      {!displayed.length && <p>Nenhuma foto neste espaço.</p>}
+      </article>) : <p>Toque em “Editar foto” numa miniatura para alterar legenda, descrição, publicação ou arquivo.</p>}
     </section>
   </>;
 }
