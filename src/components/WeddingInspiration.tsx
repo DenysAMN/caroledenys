@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import { WEDDING_INSPIRATION } from "../content/wedding-photos";
+import { WEDDING_INSPIRATION, type WeddingPhoto } from "../content/wedding-photos";
 
-export default function WeddingInspiration() {
+export default function WeddingInspiration({ photos = WEDDING_INSPIRATION }: { photos?: readonly (WeddingPhoto & { caption?: string })[] }) {
   return (
     <section id="inspiracao" className="wedding-inspiration home-anchor-section" aria-labelledby="wedding-inspiration-title">
       <div className="container wedding-inspiration-grid">
@@ -17,7 +17,7 @@ export default function WeddingInspiration() {
         </header>
 
         <div className="wedding-inspiration-photos">
-          {WEDDING_INSPIRATION.map((photo) => (
+          {photos.map((photo) => (
             <figure key={photo.src}>
               <Image
                 src={photo.src}
@@ -26,6 +26,7 @@ export default function WeddingInspiration() {
                 height={photo.height}
                 sizes="(max-width: 700px) 46vw, 20vw"
               />
+              {photo.caption && <figcaption>{photo.caption}</figcaption>}
             </figure>
           ))}
         </div>

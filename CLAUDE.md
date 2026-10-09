@@ -69,6 +69,38 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 09/10/2026 — galeria administrável:** `/admin/galeria` permite
+upload em lote (até 20 fotos por envio), substituição de arquivos, descrição,
+legenda, publicação/ocultação, exclusão e ordem por botões Subir/Descer. Destinos:
+capa, história, transição, inspiração e galeria. Ao trocar um destaque único,
+a foto anterior retorna para a galeria. Home exibe as primeiras N fotos
+publicadas do álbum (0 a 12, padrão 6); `/galeria` exibe o álbum completo.
+O administrador escolhe N e a ordem. `/nos` compartilha capa/história editadas.
+Upload comprime no navegador, depois valida, reorienta e converte a WebP no
+servidor com Sharp; imagem pública não inclui EXIF/GPS. Originais de até 20 MB
+no navegador, até 4 MB por envio ao servidor; JPEG/PNG/WebP estáticos, HEIC
+precisa ser exportado como JPG. Cada arquivo tem caminho próprio no bucket
+`gallery-images`; sem escrita pública. Até 500 registros de fotos.
+Migração `20261009000000_photo_gallery.sql`: duas tabelas com RLS, RPC pública
+que respeita publicação, RPCs administrativas exclusivas service_role e revisão
+para impedir sobrescrita de alterações em outra sessão. Cadastra as 17 imagens
+existentes e cria bucket; não precisa reenviar as fotos. Aplicar inteiro uma vez.
+**Ativação da galeria pendente:** nenhuma ferramenta ou credencial administrativa
+Supabase disponível nesta tarefa. Banco de produção não foi alterado aqui.
+Até aplicar a nova migração, fotos anteriores aparecem como fallback e o painel
+mostra o SQL para ativar os controles. Após configurar, fotos ocultas/excluídas
+não retornam como fallback; falhas transitórias não republicam imagens ocultas.
+O usuário informou em 03/10 que aplicou a migração administrativa anterior
+(`20261003000000_admin_management.sql`); isso não foi verificado por uma sessão
+autenticada desta tarefa e não substitui a nova migração da galeria.
+Validação: npm ci, 117 testes (PostgreSQL isolado e processamento de imagens),
+lint, TypeScript e build aprovados. HTML conferido: 6 fotos na home e 10 no
+álbum completo; verificar preview/deploy Vercel na publicação.
+Sem variáveis Supabase no runtime: catálogo/recados vazios, fotos legadas no
+build; upload e autenticação de produção não foram exercitados nesta tarefa.
+O usuário autorizou a implementação/publicação e já autorizara publicar tudo.
+
+
 **Atualização de 03/10/2026 — ordem da home e painel ampliado:** capa seguida por
 Nós → Nossa inspiração → Dress code → Presentes → Localização → Recados → Fotos.
 Menu com essas âncoras e rolagem horizontal no celular; acesso a `/meus` mantido.
@@ -81,8 +113,9 @@ recebimento de LINK, editar recados com controle de conflito e preservar a
 versão anterior. Motivos, autor e alterações ficam em `admin_activity`, privada
 com RLS e RPCs exclusivas de `service_role`. PIX pago não pode ser cancelado por
 essa função. Presente com histórico não pode ser excluído (guardas no app/banco).
-**Ativação pendente:** esta tarefa não tem conexão/credencial administrativa
-Supabase nem ferramenta para aplicar a migração. Não foi aplicada na produção.
+**Histórico de ativação:** a migração foi preparada aqui e o usuário informou
+em 03/10 que a executou no Supabase. Sem conexão administrativa nesta tarefa,
+a execução não foi verificada diretamente.
 O painel detecta a função de disponibilidade; antes da migração mostra aviso e
 mantém desativados os botões que dependem dela. Busca, filtros, exportação,
 aprovação/ocultação de recados permanecem disponíveis. Executar o arquivo inteiro
