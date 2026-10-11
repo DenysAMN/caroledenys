@@ -69,6 +69,31 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 11/10/2026 — conferência para os noivos:** `/admin` reúne
+resumo financeiro, progresso do catálogo publicado, cartões por presente e fila
+de comprovantes. PIX confirmado separado de preço estimado de LINK recebido;
+PIX aguardando envio e em análise nunca contam como dinheiro confirmado.
+Progresso possui recebido e coberto por reservas/recebimentos, com valores que
+faltam receber e ainda não têm reserva. Meta = LINK com preço + total de cotas
+× valor por cota, somente presentes publicados com valor definido. LIVRE,
+ocultos e itens sem preço não compõem o denominador; pagamentos LIVRE/ocultos
+continuam no PIX geral. COTAS CONCLUIDO pode significar só todas as cotas
+reservadas: recebimento exige claims PAGO. LINK é contado uma vez, sem somar
+preço de referência como PIX. Cancelados/expirados não compõem promessas.
+Filtros por situação, tipo, categoria e busca por presente/convidado; ordenação
+por maior falta, maior recebido ou nome. Mostra cotas disponíveis, reservas,
+percentual por presente e nomes atrás de autenticação. CSV da seleção em
+`/admin/resumo/exportar`, protegido e sem cache público. Fila tem busca por
+pagador/convidado/presente/TXID, tipo e ordenação; comprovantes recolhidos para
+facilitar leitura, confirmação manual preservada. Leituras paginadas no servidor
+para evitar totais truncados em 1.000 registros; erro não vira resumo zerado.
+Sem nova migração ou escrita em produção. Validação: 132 testes, lint, TypeScript
+e build neste runtime. Sem variáveis Supabase locais: catálogo/recados vazios e
+fotos legadas no build; dados reais/login e conferência em sessão autenticada
+não exercitados aqui. Verificar Vercel após publicar. O commit anterior
+`4f6dec4` agora retorna status Vercel success (a tentativa inicial tinha falhado).
+
+
 **Atualização de 09/10/2026 — organização visual das fotos:** painel de
 `/admin/galeria` com mosaico de miniaturas, arraste para reordenar e cinco áreas
 para soltar e mudar o destino (capa, história, transição, inspiração e galeria).

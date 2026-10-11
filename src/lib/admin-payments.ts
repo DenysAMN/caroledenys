@@ -1,6 +1,7 @@
 import "server-only";
 import { requireAdmin } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabaseAdmin";
+import { readAllRows } from "./admin-pagination";
 import { RECEIPT_BUCKET } from "@/lib/receipt-validation";
 
 export type PendingPayment = {
@@ -36,17 +37,12 @@ function first<T>(value: T | T[] | null): T | null {
 export async function getPendingPayments(): Promise<PendingPayment[]> {
   await requireAdmin();
   const admin = createAdminClient();
-  const { data, error } = await admin
+  const rows = await readAllRows<PendingPaymentRow>((from,to) => admin
     .from("claims")
-    .select(
-      "id, amount_cents, payer_name, txid, receipt_url, created_at, guests(name), gifts(title, type)"
-    )
+    .select("id, amount_cents, payer_name, txid, receipt_url, created_at, guests(name), gifts(title, type)")
     .eq("status", "EM_ANALISE")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: true }).order("id").range(from,to));
 
-  if (error) throw new Error(`Fila de pagamentos: ${error.message}`);
-
-  const rows = (data ?? []) as unknown as PendingPaymentRow[];
   const valid = rows.filter(
     (row) =>
       Number.isSafeInteger(row.amount_cents) &&
