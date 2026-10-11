@@ -1,22 +1,19 @@
 import "server-only";
 import { requireAdmin } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabaseAdmin";
+import { readAllRows } from "./admin-pagination";
 import type { Gift } from "@/lib/types";
 
 export const GIFT_IMAGE_BUCKET = "gift-images";
 
-export async function getAdminGifts(): Promise<(Gift & { reservedBy: string[] })[]> {
+export async function getAdminGifts(): Promise<(Gift & { reservedBy: string[]; paidShares: number; hasReceived: boolean; hasReservations: boolean; hasPending: boolean })[]> {
   await requireAdmin();
   const admin = createAdminClient();
-  const { data, error } = await admin
-    .from("gifts")
-    .select("*")
-    .order("sort_order", { ascending: true });
-  if (error) throw new Error(`Presentes: ${error.message}`);
-  const { data: claims, error: claimsError } = await admin.from("claims")
-    .select("gift_id, guests(name)")
-    .in("status", ["RESERVADO", "AGUARDANDO_PAGAMENTO", "EM_ANALISE", "PAGO", "RECEBIDO"]);
-  if (claimsError) throw new Error("Não foi possível carregar quem reservou os presentes.");
+  const [data, claims] = await Promise.all([
+    readAllRows<Gift>((from,to) => admin.from("gifts").select("*").order("sort_order").order("id").range(from,to)),
+    readAllRows<{ gift_id: string; status: string; shares: number | null; guests: { name: string } | { name: string }[] | null }>((from,to) => admin.from("claims")
+      .select("gift_id,status,shares,guests(name)").in("status", ["RESERVADO", "AGUARDANDO_PAGAMENTO", "EM_ANALISE", "PAGO", "RECEBIDO"]).order("id").range(from,to)),
+  ]);
   const names = new Map<string, Set<string>>();
   for (const row of claims ?? []) {
     const guest = Array.isArray(row.guests) ? row.guests[0] : row.guests;
@@ -24,7 +21,17 @@ export async function getAdminGifts(): Promise<(Gift & { reservedBy: string[] })
     const set = names.get(row.gift_id) ?? new Set<string>();
     set.add(guest.name); names.set(row.gift_id, set);
   }
-  return ((data ?? []) as Gift[]).map(gift => ({ ...gift, reservedBy: [...(names.get(gift.id) ?? [])] }));
+  const stats = new Map<string, { paidShares: number; hasReceived: boolean; hasReservations: boolean; hasPending: boolean }>();
+  for (const claim of claims) {
+    const entry = stats.get(claim.gift_id) ?? { paidShares: 0, hasReceived: false, hasReservations: false, hasPending: false };
+    entry.hasReservations = true;
+    if (claim.status === "PAGO") entry.paidShares += claim.shares ?? 0;
+    if (["PAGO", "RECEBIDO"].includes(claim.status)) entry.hasReceived = true;
+    if (["RESERVADO", "AGUARDANDO_PAGAMENTO", "EM_ANALISE"].includes(claim.status)) entry.hasPending = true;
+    stats.set(claim.gift_id, entry);
+  }
+  return data.map(gift => ({ ...gift, reservedBy: [...(names.get(gift.id) ?? [])],
+    ...(stats.get(gift.id) ?? { paidShares: 0, hasReceived: false, hasReservations: false, hasPending: false }) }));
 }
 
 export async function getAdminGift(id: string): Promise<Gift | null> {
