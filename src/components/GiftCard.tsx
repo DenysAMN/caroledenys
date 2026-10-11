@@ -12,6 +12,7 @@ const TYPE_LABEL: Record<Gift["type"], string> = {
 
 export default function GiftCard({ gift }: { gift: Gift }) {
   const done = gift.status === "CONCLUIDO";
+  const reserved = gift.type === "LINK" && gift.status === "RESERVADO";
   const kicker = [TYPE_LABEL[gift.type], gift.category].filter(Boolean).join(" · ");
 
   return (
@@ -29,7 +30,8 @@ export default function GiftCard({ gift }: { gift: Gift }) {
         ) : (
           <GiftThumb />
         )}
-        {done && <div className="done">Presenteado ♥</div>}
+        {done && <div className="done">{gift.type === "COTAS" ? "Cotas preenchidas ♥" : "Presenteado ♥"}</div>}
+        {reserved && <div className="done is-reserved">Reservado</div>}
       </div>
       <div className="gift-body">
         <span className="gift-kicker">{kicker}</span>
@@ -64,7 +66,7 @@ function CotasFoot({ gift }: { gift: Gift }) {
       </div>
       <div className="prog-meta">
         <span>
-          {taken} de {total} cotas
+          {Math.max(0,total-taken)} de {total} cotas disponíveis
         </span>
         <span>
           {formatBRLShort(raised)}

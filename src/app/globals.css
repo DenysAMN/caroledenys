@@ -1276,3 +1276,47 @@ body:has(.admin-root) { background: #f4efe6; }
  .admin-overview-metrics strong { font-size: 25px; }
  .admin-overview-gifts header { flex-wrap: wrap; }
 }
+
+/* Presentes: filtros rápidos, disponíveis sem rolagem manual */
+.admin-catalog-toolbar { position: sticky; top: 0; z-index: 4; margin-top: 22px; padding: 16px 0; background: var(--ivory); border-bottom: 1px solid var(--sand-2); }
+.admin-catalog-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.admin-catalog-chip { display: flex; align-items: center; gap: 8px; padding: 10px 14px; min-height: 44px; border: 1px solid var(--sand-2); border-radius: 24px; color: var(--ink-soft); cursor: pointer; font-size: 13px; }
+.admin-catalog-chip span { padding: 2px 6px; border-radius: 12px; font-size: 11px; background: #00000008; }
+.admin-catalog-chip.is-active { background: var(--wine); border-color: var(--wine); color: white; }
+.admin-catalog-chip.is-active span { background: #ffffff20; }
+.admin-catalog-chip:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.admin-catalog-search { display: block; margin-top: 14px; }
+.admin-catalog-search > span { display: block; font-size: 12px; margin-bottom: 6px; color: var(--muted); }
+.admin-catalog-search input, .admin-catalog-extra select, .gift-list-search input, .gift-list-search select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--sand-2); border-radius: 5px; background: var(--paper); font: inherit; font-size: 14px; }
+.admin-catalog-extra { margin-top: 10px; font-size: 12px; }
+.admin-catalog-extra summary { cursor: pointer; padding: 6px 0; }
+.admin-catalog-extra > div { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 10px; }
+.admin-catalog-extra label { display: grid; gap: 6px; min-width: 160px; }
+.admin-catalog-result { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; font-size: 12px; }
+.admin-catalog-result button, .gift-list-results button { color: var(--wine); cursor: pointer; text-decoration: underline; }
+.admin-catalog-tip { margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; }
+.admin-catalog-list { margin-top: 0; }
+.admin-catalog-list .admin-gift-row { grid-template-columns: 76px minmax(0,1fr) 140px 70px; padding: 14px 0; }
+.admin-catalog-list .admin-gift-name small { letter-spacing: normal; text-transform: none; font-size: 11px; line-height: 1.65; margin-top: 4px; }
+.admin-catalog-status { display: inline-block; margin-top: 8px; padding: 4px 8px; font-size: 11px; border-radius: 5px; background: #7a1e3310; color: var(--wine); }
+.admin-catalog-status.is-available { background: #43552512; color: #435525; }
+.admin-catalog-status.is-received { background: #43552520; color: #354b22; }
+.admin-catalog-price { font-size: 13px; color: var(--muted); }
+.gift-list-tools { margin-bottom: 24px; }
+.gift-list-tools .chips { margin-bottom: 18px; }
+.gift-list-tools .chip { min-height: 44px; }
+.gift-list-search { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr); gap: 14px; max-width: 650px; margin: 0 auto; }
+.gift-list-search label { display: grid; gap: 6px; font-size: 12px; }
+.gift-list-results { display: flex; justify-content: center; gap: 18px; margin: 14px 0; font-size: 12px; color: var(--muted); }
+.gift-list-empty { padding: 30px; text-align: center; border: 1px solid var(--sand-2); }
+.gift-list-empty h3 { font: 500 30px var(--font-display); }
+.gift-list-empty p { margin: 12px 0 20px; }
+.gift-thumb .done.is-reserved { background: #532337b8; }
+@media (max-width: 900px) { .admin-catalog-toolbar { top: 58px; } }
+@media (max-width: 580px) {
+ .admin-catalog-chip { padding: 9px 11px; font-size: 12px; }
+ .admin-catalog-list .admin-gift-row { grid-template-columns: 58px minmax(0,1fr); gap: 12px; }
+ .admin-catalog-list .admin-gift-miniature { grid-row: 1; width: 58px; height: 58px; }
+ .admin-catalog-price { grid-column: 2; margin-top: -6px; }
+ .gift-list-search { grid-template-columns: 1fr; }
+}

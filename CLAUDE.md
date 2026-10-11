@@ -69,6 +69,28 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 11/10/2026 — filtros rápidos na tela Presentes:** usuário
+esclareceu que queria simplificar `/admin/presentes`, mantendo a conferência.
+Botões Todos, Disponíveis, Reservados, Recebidos e Ocultos com contagens;
+filtragem imediata no cliente, busca por presente/quem reservou sem exigir
+acentos, limpar filtros e tipo/categoria opcionais recolhidos. Barra permanece
+visível durante rolagem. Lista mais compacta, status em linguagem comum e
+cotas restantes/pagas visíveis no celular. Cotas totalmente comprometidas não
+são marcadas recebidas sem claims PAGO; LIVRE continua disponível após
+contribuições. Parciais podem constar em Disponíveis e Reservados.
+Leitura administrativa paginada e autenticada; props do cliente contêm apenas
+campos de exibição e nomes já restritos ao painel, sem telefones ou tokens.
+Na lista pública, corrige Disponíveis (LINK RESERVADO não pode aparecer),
+adiciona botão Reservados, busca e categoria independente, contagens e estado
+vazio. LINK reservado recebe selo; COTAS cheias dizem “Cotas preenchidas”,
+sem inferir pagamento. Home prioriza presentes disponíveis na prévia.
+Sem migração, escrita no banco ou testes de integração em produção.
+Validação: npm ci, 139 testes, lint, TypeScript e build. Sem variáveis Supabase
+no runtime, catálogo/recados vazios no build. Lista pública foi aberta no
+navegador; dados privados do painel ainda dependem de sessão autenticada.
+Verificar botões públicos e deploy Vercel após publicar.
+
+
 **Atualização de 11/10/2026 — conferência para os noivos:** `/admin` reúne
 resumo financeiro, progresso do catálogo publicado, cartões por presente e fila
 de comprovantes. PIX confirmado separado de preço estimado de LINK recebido;

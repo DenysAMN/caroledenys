@@ -10,6 +10,7 @@ import CoupleStorySection from "@/components/CoupleStorySection";
 import GiftCard from "@/components/GiftCard";
 import WeddingGallery from "@/components/WeddingGallery";
 import WeddingInspiration from "@/components/WeddingInspiration";
+import { giftAvailable } from "@/lib/gift-filters";
 import { getGifts } from "@/lib/gifts";
 import { getPublicMessages } from "@/lib/public-messages";
 
@@ -29,7 +30,8 @@ export default async function Home() {
     getPublicGallery(),
   ]);
   const photos = gallerySelection(photoSnapshot);
-  const preview = gifts.slice(0, 3);
+  const availableGifts = gifts.filter(giftAvailable);
+  const preview = (availableGifts.length ? availableGifts : gifts).slice(0, 3);
   const messagePreview = messages.slice(0, 2);
 
   return (
