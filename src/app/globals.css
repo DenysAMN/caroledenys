@@ -1226,3 +1226,53 @@ body:has(.admin-root) { background: #f4efe6; }
 
 .wedding-inspiration-photos figure { position: relative; }
 .wedding-inspiration-photos figcaption { position: absolute; inset: auto 0 0; padding: 12px; background: rgba(83,35,55,.85); color: var(--ivory); font-size: 12px; line-height: 1.5; }
+
+/* Conferência: visão financeira e catálogo para os noivos */
+.admin-overview-shortcuts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 24px 0; }
+.admin-overview-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
+.admin-overview-metrics article { padding: 20px; background: var(--paper); border: 1px solid var(--sand-2); }
+.admin-overview-metrics span, .admin-overview-remaining span { display: block; font-size: 12px; color: var(--muted); }
+.admin-overview-metrics strong { display: block; margin: 10px 0; font: 500 clamp(25px, 2.5vw, 34px)/1.2 var(--font-display); overflow-wrap: anywhere; }
+.admin-overview-metrics small, .admin-overview-remaining small { display: block; color: var(--muted); line-height: 1.6; font-size: 12px; }
+.admin-overview-progress { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; padding: 26px; border: 1px solid var(--sand-2); background: var(--paper); }
+.admin-overview-progress h2 { font-size: 32px; margin: 8px 0 22px; }
+.admin-overview-progress label { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; margin: 18px 0 8px; }
+.admin-overview-progress p { font-size: 12px; line-height: 1.6; }
+.admin-overview-progress progress, .admin-overview-gift-progress progress { display: block; appearance: none; width: 100%; height: 10px; border: 0; border-radius: 9px; overflow: hidden; background: var(--sand); accent-color: var(--wine); }
+.admin-overview-progress progress::-webkit-progress-bar, .admin-overview-gift-progress progress::-webkit-progress-bar { background: var(--sand); }
+.admin-overview-progress progress::-webkit-progress-value, .admin-overview-gift-progress progress::-webkit-progress-value { background: var(--wine); }
+.admin-overview-progress progress::-moz-progress-bar, .admin-overview-gift-progress progress::-moz-progress-bar { background: var(--wine); }
+.admin-overview-progress progress.is-reserved { accent-color: var(--gold); }
+.admin-overview-progress progress.is-reserved::-webkit-progress-value { background: var(--gold); }
+.admin-overview-progress progress.is-reserved::-moz-progress-bar { background: var(--gold); }
+.admin-overview-remaining { padding-left: 22px; border-left: 1px solid var(--sand-2); }
+.admin-overview-remaining strong { display: block; font: 500 30px/1.2 var(--font-display); margin: 8px 0; }
+.admin-overview-remaining small { margin-bottom: 24px; }
+.admin-overview-note { grid-column: 1 / -1; color: var(--muted); }
+.admin-overview-section { margin-top: 38px; scroll-margin-top: 95px; }
+.admin-overview-section .admin-section-head p { line-height: 1.7; }
+.admin-overview-gifts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; margin-top: 20px; }
+.admin-overview-gifts article { min-width: 0; padding: 22px; background: var(--paper); border: 1px solid var(--sand-2); }
+.admin-overview-gifts header { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.admin-overview-gifts h3 { font: 500 26px/1.2 var(--font-display); margin-top: 6px; }
+.admin-overview-gifts header small { color: var(--muted); font-size: 11px; }
+.admin-overview-gifts dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; padding: 20px 0; }
+.admin-overview-gifts dt { color: var(--muted); font-size: 11px; }
+.admin-overview-gifts dd { margin-top: 4px; font-size: 15px; overflow-wrap: anywhere; }
+.admin-overview-gifts p, .admin-overview-gifts details { font-size: 12px; line-height: 1.65; margin: 12px 0; }
+.admin-overview-gifts summary { cursor: pointer; padding: 8px 0; }
+.admin-overview-gifts .text-link { display: inline-block; padding: 8px 0; font-size: 12px; }
+.admin-overview-gift-progress label { display: block; font-size: 12px; margin-bottom: 6px; }
+.admin-overview-alert { color: var(--wine); font-weight: 600; }
+.admin-receipt-frame:has(.admin-receipt-details) { min-height: 0; }
+.admin-receipt-details { width: 100%; }
+.admin-receipt-details summary { cursor: pointer; padding: 12px; color: var(--wine); font-size: 13px; line-height: 1.6; }
+@media (max-width: 1050px) { .admin-overview-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 650px) {
+ .admin-overview-progress, .admin-overview-gifts { grid-template-columns: 1fr; }
+ .admin-overview-progress { padding: 20px; }
+ .admin-overview-remaining { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--sand-2); }
+ .admin-overview-metrics article { padding: 14px; }
+ .admin-overview-metrics strong { font-size: 25px; }
+ .admin-overview-gifts header { flex-wrap: wrap; }
+}

@@ -28,11 +28,14 @@ export default function AdminQueue({ payments }: { payments: PendingPayment[] })
           </div>
           <div className="admin-receipt-frame">
             {payment.receiptUrl ? (
-              <iframe
-                src={payment.receiptUrl}
-                title={`Comprovante de ${payment.payerName}`}
-                loading="lazy"
-              />
+              <details className="admin-receipt-details">
+                <summary>Ver comprovante de {payment.guestName}</summary>
+                <iframe
+                  src={payment.receiptUrl}
+                  title={`Comprovante de ${payment.payerName}`}
+                  loading="lazy"
+                />
+              </details>
             ) : (
               <p>Comprovante indisponível.</p>
             )}
