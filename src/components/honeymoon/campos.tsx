@@ -1,7 +1,7 @@
 "use client";
 
 // Campos que parecem texto: sem caixa, só um traço fino que acende ao tocar.
-import { useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { LIMITES, centavosParaEntrada, formatarCoordenadas, parseCoordenadas, reaisParaCentavos } from "../../lib/honeymoon-plan";
 
 export type Mudar<T> = (mudanca: (atual: T) => T) => void;
@@ -26,6 +26,22 @@ function Rotulo({ rotulo, visivel = true }: { rotulo: string; visivel?: Visibili
 
 export function Texto({ rotulo, rotuloVisivel, className = "", valor, aoMudar, placeholder, tipo = "text", destaque = false, max = LIMITES.texto }:
   Base & { valor: string; aoMudar: (valor: string) => void; placeholder?: string; tipo?: "text" | "date" | "url"; destaque?: boolean; max?: number }) {
+  const area = useRef<HTMLTextAreaElement>(null);
+  // Texto comum quebra em várias linhas no celular, sem cortar: a altura acompanha o conteúdo.
+  useLayoutEffect(() => {
+    const el = area.current;
+    if (!el) return;
+    const ajustar = () => { el.style.height = "auto"; el.style.height = `${el.scrollHeight}px`; };
+    ajustar();
+    window.addEventListener("resize", ajustar);
+    return () => window.removeEventListener("resize", ajustar);
+  }, [valor]);
+  if (tipo === "text" && !destaque) return <label className={`block min-w-0 ${className}`}>
+    <Rotulo rotulo={rotulo} visivel={rotuloVisivel} />
+    <textarea ref={area} rows={1} value={valor} maxLength={max} placeholder={placeholder} onChange={evento => aoMudar(evento.target.value.replace(/\n/g, " "))}
+      onKeyDown={evento => { if (evento.key === "Enter") evento.preventDefault(); }}
+      className={`${estilo.campo} resize-none overflow-hidden`} />
+  </label>;
   return <label className={`block min-w-0 ${className}`}>
     <Rotulo rotulo={rotulo} visivel={rotuloVisivel} />
     <input type={tipo} value={valor} maxLength={max} placeholder={placeholder} onChange={evento => aoMudar(evento.target.value)}
