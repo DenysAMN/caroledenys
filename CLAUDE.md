@@ -69,6 +69,31 @@ npx supabase db push # aplica migrações
 
 ## Estado atual
 
+**Atualização de 08/11/2026 — Lua de mel no painel:** nova página
+`/admin/lua-de-mel` (“Lua de mel” no menu), só para admin (`requireAdmin`).
+Planejador editável no lugar, mobile-first: resumo e “Já resolvido”, mapa
+mental derivado dos dados (só leitura), mapa dos lugares em SVG próprio (sem
+biblioteca nem tiles; equirretangular com cos(lat), enquadramento automático,
+anel de 10 km do hotel, escala de 5 km, norte; a mais de 60 km vai para
+“Longe”) com tabela editável e link do Google Maps, dia a dia, decisões com
+faixa de valores, prazos de reserva (vencidos em destaque), gastos com totais
+por grupo e geral, notas e fontes https. Valores digitados em reais e guardados
+em centavos. Salvar fixo no rodapé, aviso ao sair com mudança não salva e
+concorrência otimista por `revision`: quem salva por último é avisado e não
+sobrescreve. “Avançado” exporta/importa o JSON; o formato e a validação ficam
+em `src/lib/honeymoon-plan.ts` (`parsePlano`). Repositório público: nenhum dado
+real da viagem no código ou nos testes; o conteúdo entra pelo painel (Importar).
+Migração `20261108000000_honeymoon_plan.sql`: tabela singleton `honeymoon_plan`
+(RLS ligado, sem política, acesso só `service_role`) e função
+`admin_save_honeymoon_plan` (grava só na revisão atual, senão `STALE_REVISION`).
+**Aplicar a migração no Supabase antes do deploy**; sem ela a página mostra o
+aviso com o SQL em vez de quebrar. Validação: npm ci, 203 testes (migração em
+PGlite), lint, TypeScript e build. Sem variáveis Supabase no runtime: migração
+não aplicada em produção; página não aberta em sessão autenticada nem em
+navegador; edição em celular real e em dois aparelhos não verificada.
+Branch local `claude/lua-de-mel`, sem push.
+
+
 **Atualização de 11/10/2026 — filtros rápidos na tela Presentes:** usuário
 esclareceu que queria simplificar `/admin/presentes`, mantendo a conferência.
 Botões Todos, Disponíveis, Reservados, Recebidos e Ocultos com contagens;

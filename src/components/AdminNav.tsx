@@ -20,6 +20,7 @@ export default async function AdminNav() {
         <Link href="/admin/historico">Histórico</Link>
         <Link href="/admin/convidados">Convidados</Link>
         <Link href="/admin/recados">Recados</Link>
+        <Link href="/admin/lua-de-mel">Lua de mel</Link>
       </nav>
       <form action={logout}>
         <button type="submit" className="admin-logout">Sair</button>

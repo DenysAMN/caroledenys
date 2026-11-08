@@ -1320,3 +1320,7 @@ body:has(.admin-root) { background: #f4efe6; }
  .admin-catalog-price { grid-column: 2; margin-top: -6px; }
  .gift-list-search { grid-template-columns: 1fr; }
 }
+
+/* Lua de mel: a regra global de <a> tira o sublinhado; os links do planejador precisam dele */
+.lua-de-mel-link { color: var(--marsala); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 4px; }
+.lua-de-mel-link:hover { color: var(--marsala-deep); }
